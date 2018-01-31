@@ -47,7 +47,11 @@ public class Person6 {
 	  	int randNum = (int) (Math.random() * oldWord.size());
 	  	newWord.add(oldWord.remove(randNum));
 	  }
-	  return newWord.toString();
+	  String output = "";
+	  for(char c:newWord) {
+	  	output = c + output;
+	  }
+	  return output;
 	}
 	/**
 	 * Return a string rep of this object
