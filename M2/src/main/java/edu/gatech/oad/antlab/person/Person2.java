@@ -40,7 +40,7 @@ public class Person2 {
       }
       StringBuilder returnString = new StringBuilder(input.length());
       while(inChars.size()!=0){
-          int randomNumber = (int)(Math.random()*characters.size());
+          int randomNumber = (int)(Math.random()*inChars.size());
           returnString.append(inChars.remove(randomNumber));
       }
 	  return returnString.toString();
