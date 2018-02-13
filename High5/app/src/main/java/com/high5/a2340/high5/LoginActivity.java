@@ -1,5 +1,6 @@
 package com.high5.a2340.high5;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText passwordText;
     private TextView signInButton;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailText = (EditText) findViewById((R.id.emailTextBox));
         passwordText = (EditText) findViewById((R.id.passwordTextBox));
         signInButton = (TextView) findViewById((R.id.registrationButton));
+
+        progressDialog = new ProgressDialog(this);
 
         loginButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
@@ -60,7 +65,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void signIn() {
         String email = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
-
+        if (email.length() == 0 || password.length() == 0) {
+            Toast.makeText(LoginActivity.this, "Email and Password cannot be empty.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
         fireBaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -76,11 +87,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
+                        progressDialog.dismiss();
                         // ...
-                    }
-                });
-
+                    }});
     }
 
     @Override
