@@ -8,16 +8,19 @@ package edu.gatech.oad.antlab.person;
  *  @version 1.1
  */
 public class Person3 {
-   /** Holds the persons real name */
+	/**
+	 * Holds the persons real name
+	 */
 	private String name;
 
 	/**
 	 * The constructor, takes in the persons
 	 * name
+	 *
 	 * @param pname the person's real name
 	 */
-	public Person3(String pname){
-	  name = pname;
+	public Person3(String pname) {
+		name = pname;
 	}
 
 	/**
@@ -26,10 +29,10 @@ public class Person3 {
 	 *
 	 * @param input the varying string
 	 * @return the string representing the
-	 *         object
+	 * object
 	 */
 	public String toString(String input) {
-	  return name + calc(input);
+		return name + calc(input);
 	}
 
 	/**
@@ -42,7 +45,11 @@ public class Person3 {
 	 * @return the reversed string
 	 */
 	private String calc(String input) {
-	  //Person 3 put your implementation here
-	  return " :)"; //Done
+		String ret = "";
+
+		for (int i = input.length() - 1; i >= 0; i--) {
+			ret = ret + input.charAt(i);
+		}
+		return ret; //Done
 	}
 }
