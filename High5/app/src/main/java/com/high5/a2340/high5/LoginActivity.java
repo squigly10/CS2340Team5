@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginButton;
     private EditText emailText;
     private EditText passwordText;
-    private TextView signUpButton;
+    private TextView signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +40,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (Button) findViewById(R.id.button);
         emailText = (EditText) findViewById((R.id.emailTextBox));
         passwordText = (EditText) findViewById((R.id.passwordTextBox));
-        signUpButton = (TextView) findViewById((R.id.signInButton));
+        signInButton = (TextView) findViewById((R.id.registrationButton));
 
         loginButton.setOnClickListener(this);
-        signUpButton.setOnClickListener(this);
+        signInButton.setOnClickListener(this);
 
     }
 
@@ -83,14 +83,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-
     @Override
     public void onClick(View view) {
         if (view == loginButton) {
             signIn();
         }
-        if (view == signUpButton) {
-            startActivity(new Intent(this, RegistrationActivity.class));
+        if (view ==  signInButton) {
+            startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
         }
     }
 }
