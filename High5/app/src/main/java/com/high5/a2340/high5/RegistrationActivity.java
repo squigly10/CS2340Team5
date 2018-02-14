@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -70,8 +73,14 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.getException().getMessage().contains("The email address is already in use by another account.")) {
+                                Toast.makeText(RegistrationActivity.this,
+                                        "The email address is already in use by another account.",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
                         progressDialog.dismiss();
                         // ...
@@ -87,7 +96,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (TextUtils.isEmpty(email)) {
             userEmail.setError("Required.");
             valid = false;
-        } else {
+        }
+        else if (!isEmailValid(email)) {
+            Toast.makeText(RegistrationActivity.this, "Please enter valid email address.",
+                    Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else {
             userEmail.setError(null);
         }
 
@@ -97,8 +112,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             userPassword.setError("Required.");
             valid = false;
         }
-        if (password.length() < 6) {
-            userPassword.setError("Must be longer than 6 characters");
+        else if (password.length() < 6) {
+            Toast.makeText(RegistrationActivity.this, "Must be longer than 6 characters.",
+                    Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             userPassword.setError(null);
@@ -116,7 +132,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         return valid;
     }
-
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
     @Override
     public void onClick(View view) {
         if (view == signUpButton) {

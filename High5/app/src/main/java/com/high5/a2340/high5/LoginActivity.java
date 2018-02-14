@@ -61,9 +61,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void signIn() {
         String email = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
-        if (email.length() == 0 || password.length() == 0) {
-            Toast.makeText(LoginActivity.this, "Email and Password cannot be empty.",
-                    Toast.LENGTH_SHORT).show();
+        if (email.length() == 0 && password.length() == 0) {
+            emailText.setError("Required");
+            passwordText.setError("Required");
+            return;
+        }
+        if (email.length() == 0 ) {
+            emailText.setError("Required");
+            return;
+        }
+        if (password.length() == 0) {
+            passwordText.setError("Required");
             return;
         }
         progressDialog.setMessage("Logging in...");
