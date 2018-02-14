@@ -1,5 +1,6 @@
 package com.high5.a2340.high5;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private Button signUpButton;
     private Button backButton;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         signUpButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
 
+        progressDialog = new ProgressDialog(this);
     }
 
     public void createAccount() {
@@ -53,7 +57,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (!validateForm()) {
             return;
         }
-
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -68,7 +73,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
+                        progressDialog.dismiss();
                         // ...
                     }
                 });
@@ -90,6 +95,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         String passwordConfirmation = userPasswordConfirmation.getText().toString();
         if (TextUtils.isEmpty(password)) {
             userPassword.setError("Required.");
+            valid = false;
+        }
+        if (password.length() < 6) {
+            userPassword.setError("Must be longer than 6 characters");
             valid = false;
         } else {
             userPassword.setError(null);
