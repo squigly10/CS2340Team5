@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.LENGTH_SHORT).show();
                         }
                         progressDialog.dismiss();
-                        // ...
                     }});
     }
 

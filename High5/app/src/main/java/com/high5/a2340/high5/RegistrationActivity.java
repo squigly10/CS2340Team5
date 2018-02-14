@@ -111,10 +111,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (TextUtils.isEmpty(password)) {
             userPassword.setError("Required.");
             valid = false;
-        }
-        else if (password.length() < 6) {
-            Toast.makeText(RegistrationActivity.this, "Must be longer than 6 characters.",
-                    Toast.LENGTH_SHORT).show();
+        } else if (password.length() < 6) {
+            userPassword.setError("Must be longer than 6 characters.");
             valid = false;
         } else {
             userPassword.setError(null);
@@ -123,7 +121,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (TextUtils.isEmpty(passwordConfirmation)) {
             userPasswordConfirmation.setError("Required");
             valid = false;
-        } else if (!password.equals(passwordConfirmation)) {
+        } else {
+            userPasswordConfirmation.setError(null);
+        }
+        if (!password.equals(passwordConfirmation)) {
             userPasswordConfirmation.setError("Passwords must match!");
             valid = false;
         } else {
