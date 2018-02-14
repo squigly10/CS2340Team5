@@ -39,28 +39,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         fireBaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = fireBaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
 
-        loginButton = (Button) findViewById(R.id.button);
+        loginButton = (Button) findViewById(R.id.signInButton);
         emailText = (EditText) findViewById((R.id.emailTextBox));
         passwordText = (EditText) findViewById((R.id.passwordTextBox));
         signInButton = (TextView) findViewById((R.id.registrationButton));
 
         progressDialog = new ProgressDialog(this);
 
+
         loginButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
 
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = fireBaseAuth.getCurrentUser();
-        // DO THIS
-        // got to main screen
-    }
 
     public void signIn() {
         String email = emailText.getText().toString().trim();
