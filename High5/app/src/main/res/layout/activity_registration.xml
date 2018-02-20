@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.high5.a2340.high5.RegistrationActivity">
+    tools:context="com.high5.a2340.high5.Activities.RegistrationActivity">
 
     <Button
         android:id="@+id/backButton"

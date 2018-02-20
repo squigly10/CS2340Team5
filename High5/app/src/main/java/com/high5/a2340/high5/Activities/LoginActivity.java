@@ -1,4 +1,4 @@
-package com.high5.a2340.high5;
+package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,8 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
+import com.high5.a2340.high5.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

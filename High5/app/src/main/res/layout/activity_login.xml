@@ -5,7 +5,7 @@
     android:id="@+id/loginButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.high5.a2340.high5.LoginActivity">
+    tools:context="com.high5.a2340.high5.Activities.LoginActivity">
 
     <EditText
         android:id="@+id/emailTextBox"

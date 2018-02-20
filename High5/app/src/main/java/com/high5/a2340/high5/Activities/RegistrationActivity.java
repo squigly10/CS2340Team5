@@ -1,4 +1,4 @@
-package com.high5.a2340.high5;
+package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,14 +8,21 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.high5.a2340.high5.Model.Model;
+import com.high5.a2340.high5.Model.User;
+import com.high5.a2340.high5.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,12 +32,14 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private static final String TAG = "EmailPassword";
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference Database;
 
     private EditText userEmail;
     private EditText userPassword;
     private EditText userPasswordConfirmation;
     private Button signUpButton;
     private Button backButton;
+    private Spinner userTypeSpinner;
 
     private ProgressDialog progressDialog;
 
@@ -40,12 +49,19 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_registration);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        Database = FirebaseDatabase.getInstance().getReference();
 
         userEmail = findViewById(R.id.emailTextBox);
         userPassword = findViewById(R.id.passwordTextBox);
         userPasswordConfirmation = findViewById(R.id.confirmPasswordTextBox);
         signUpButton = findViewById(R.id.signInButton);
         backButton = findViewById(R.id.backButton);
+
+        //get spinner object and populate with UserTypes Enum
+        userTypeSpinner = findViewById(R.id.userTypeSpinner);
+        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Model.legalUserTypes);
+        userTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userTypeSpinner.setAdapter(userTypeAdapter);
 
         signUpButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -54,8 +70,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void createAccount() {
-        String email = userEmail.getText().toString().trim();
-        String password = userPassword.getText().toString().trim();
+        final String email = userEmail.getText().toString().trim();
+        final String password = userPassword.getText().toString().trim();
+        final String userType = userTypeSpinner.getSelectedItem().toString();
 
         if (!validateForm()) {
             return;
@@ -69,6 +86,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
+
+                            // Add new user information into the database
+                            String userID = firebaseAuth.getUid();
+                            User newUser = new User(email, password, userType);
+                            Database.child("users").child(userID).setValue(newUser);
+
                             startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.

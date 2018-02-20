@@ -1,4 +1,4 @@
-package com.high5.a2340.high5;
+package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.high5.a2340.high5.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
