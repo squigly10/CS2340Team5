@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.high5.a2340.high5.Model.Model;
 import com.high5.a2340.high5.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button logoutButton;
 
     private ProgressDialog progressDialog;
+
+    private Model model = new Model();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fireBaseAuth = FirebaseAuth.getInstance();
 
         logoutButton.setOnClickListener(this);
+
+        this.model.populateShelters();
     }
 
     @Override

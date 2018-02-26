@@ -12,4 +12,9 @@ public class Model {
     public static final List<String> legalUserTypes = Arrays.asList(UserTypes.USER.getValue(),
                                                                             UserTypes.ADMIN.getValue(),
                                                                             UserTypes.EMPLOYEE.getValue());
+    public List<Shelter> shelterList;
+
+    public void populateShelters() {
+
+    }
 }
