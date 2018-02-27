@@ -77,4 +77,6 @@ public class Shelter {
     public void setSpecialNotes(String specialNotes) {
         this.specialNotes = specialNotes;
     }
+
+    public String toString() {return shelterName; }
 }
