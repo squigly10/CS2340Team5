@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.high5.a2340.high5.Model.Model;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +24,10 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.high5.a2340.high5", appContext.getPackageName());
+    }
+    @Test
+    public void populateShelters_Test() {
+        Model model = new Model();
+        model.populateShelters();
     }
 }
