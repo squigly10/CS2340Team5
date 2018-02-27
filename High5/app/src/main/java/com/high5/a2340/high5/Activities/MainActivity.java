@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.model.populateShelters();
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_list_item, this.model.shelterList);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_list_item, this.model.shelterList.toArray());
 
         listView.setAdapter(adapter);
     }
