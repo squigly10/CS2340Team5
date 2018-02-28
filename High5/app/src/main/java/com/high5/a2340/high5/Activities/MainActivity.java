@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public List<String> shelterKeys;
     public List defaultValues;
+    public List<Shelter> shelterList;
     private DatabaseReference mDatabase;
 
     @Override
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void populateShelters() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         shelterKeys = new ArrayList<>();
+        shelterList = new ArrayList<>();
         defaultValues = new ArrayList();
         shelterKeys.add("Address");
         defaultValues.add("No Value");
@@ -99,9 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         defaultValues.add("No Value");
 
         mDatabase.child("shelter-data").addListenerForSingleValueEvent(new ValueEventListener() {
-            List<Shelter> shelterList = new ArrayList<>();
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                progressDialog.setMessage("Retrieving Data");
+                progressDialog.show();
                 for (DataSnapshot shelter : dataSnapshot.getChildren()) {
                     List shelterSpecs = new ArrayList();
                     int index = 0;
@@ -114,17 +117,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         index++;
                     }
-
-                    adapter.add(new Shelter((String) shelterSpecs.get(0),
+                    Shelter temp = new Shelter((String) shelterSpecs.get(0),
                             String.valueOf(shelterSpecs.get(1)),
                             (Double) shelterSpecs.get(2),
                             (Double) shelterSpecs.get(3),
                             (String) shelterSpecs.get(4),
                             (String) shelterSpecs.get(5),
                             (String) shelterSpecs.get(6),
-                            (String) shelterSpecs.get(7)).toString());
-                }
+                            (String) shelterSpecs.get(7));
+                    adapter.add(temp.toString());
+                    shelterList.add(temp);
 
+                }
+                progressDialog.dismiss();
             }
 
             @Override
