@@ -1,7 +1,5 @@
 package com.high5.a2340.high5;
 
-import com.high5.a2340.high5.Model.Model;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;

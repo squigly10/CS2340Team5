@@ -20,7 +20,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.high5.a2340.high5.Model.Model;
 import com.high5.a2340.high5.Model.User;
 import com.high5.a2340.high5.R;
 
@@ -59,7 +58,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         //get spinner object and populate with UserTypes Enum
         userTypeSpinner = findViewById(R.id.userTypeSpinner);
-        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Model.legalUserTypes);
+        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, MainActivity.legalUserTypes);
         userTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userTypeSpinner.setAdapter(userTypeAdapter);
 
