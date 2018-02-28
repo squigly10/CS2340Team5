@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private FirebaseAuth fireBaseAuth;
 
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fireBaseAuth = FirebaseAuth.getInstance();
 
         logoutButton.setOnClickListener(this);
+
+        listView.setOnItemClickListener(this);
+
         adapter = new ArrayAdapter(this, R.layout.simple_list_item);
         listView.setAdapter(adapter);
         populateShelters();
@@ -69,6 +73,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             logout();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Shelter selected = shelterList.get(position);
+        Intent myIntent = new Intent(MainActivity.this, ShelterInfoActivity.class);
+        myIntent.putExtra("address", selected.getAddress());
+        myIntent.putExtra("capacity", selected.getCapacity());
+        myIntent.putExtra("latitude", selected.getLatitude());
+        myIntent.putExtra("longitude", selected.getLongitude());
+        myIntent.putExtra("phoneNumber", selected.getPhoneNumber());
+        myIntent.putExtra("restrictions", selected.getRestrictions());
+        myIntent.putExtra("shelterName", selected.getShelterName());
+        myIntent.putExtra("specialNotes", selected.getSpecialNotes());
+        startActivity(myIntent);
     }
 
     private void logout() {
