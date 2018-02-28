@@ -64,7 +64,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         latitudeField.setText(latitude.toString());
         longitudeField.setText(longitude.toString());
         phoneNumberField.setText(phoneNumber);
-        genderField.setText("gender");
+        genderField.setText(restrictions);
 
         backButton.setOnClickListener(this);
 
