@@ -18,14 +18,14 @@ public class Shelter {
     private boolean isMale;
     private String specialNotes;
 
-    enum ageRange {
+    public enum AgeRange {
         NEWBORNS,
         CHILDREN,
         YOUNGADULTS,
         ANYONE
     }
 
-    private ageRange shelterAgeRange;
+    private AgeRange shelterAgeRange;
 
 
     public Shelter() {
@@ -34,7 +34,7 @@ public class Shelter {
 
     public Shelter(String address, String capacity, double latitude, double longitude,
                    String phoneNumber, String restrictions, String shelterName, boolean isFemale,
-                   boolean isMale, String specialNotes) {
+                   boolean isMale, String specialNotes, AgeRange shelterAgeRange) {
         this.address = address;
         this.capacity = capacity;
         this.latitude = latitude;
@@ -45,6 +45,7 @@ public class Shelter {
         this.isFemale = isFemale;
         this.isMale = isMale;
         this.specialNotes = specialNotes;
+        this.shelterAgeRange = shelterAgeRange;
 
     }
 
@@ -104,9 +105,9 @@ public class Shelter {
         this.specialNotes = specialNotes;
     }
 
-    public ageRange getAgeRange() { return shelterAgeRange; }
+    public AgeRange getAgeRange() { return shelterAgeRange; }
 
-    public void setAgeRange(ageRange age) { shelterAgeRange = age; }
+    public void setAgeRange(AgeRange age) { shelterAgeRange = age; }
 
     public String toString() {return shelterName; }
 }

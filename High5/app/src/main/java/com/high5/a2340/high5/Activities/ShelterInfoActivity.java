@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.high5.a2340.high5.Model.Shelter;
 import com.high5.a2340.high5.R;
 
 /**
@@ -35,6 +36,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
     private boolean isFemale;
     private boolean isMale;
     private String specialNotes;
+    private Shelter.AgeRange shelterAgeRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         isFemale = getIntent().getExtras().getBoolean("isFemale", true);
         isMale = getIntent().getExtras().getBoolean("isMale", true);
         specialNotes = getIntent().getExtras().getString("specialNotes");
+        shelterAgeRange = (Shelter.AgeRange) getIntent().getExtras().getSerializable("shelterAgeRange");
 
         backButton = (Button) findViewById(R.id.buttonBack);
         nameField = (TextView) findViewById(R.id.textViewName);

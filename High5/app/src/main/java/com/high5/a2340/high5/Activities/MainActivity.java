@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myIntent.putExtra("isFemale", selected.isFemale());
         myIntent.putExtra("isMale", selected.isMale());
         myIntent.putExtra("specialNotes", selected.getSpecialNotes());
+        myIntent.putExtra("shelterAgeRange", selected.getAgeRange());
         startActivity(myIntent);
     }
 
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         defaultValues.add(true);
         shelterKeys.add("Special Notes");
         defaultValues.add("No Value");
+        shelterKeys.add("Age Range");
+        defaultValues.add(Shelter.AgeRange.ANYONE);
 
         mDatabase.child("shelter-data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -151,7 +154,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             (String) shelterSpecs.get(6),
                             (boolean) shelterSpecs.get(7),
                             (boolean) shelterSpecs.get(8),
-                            (String) shelterSpecs.get(9));
+                            (String) shelterSpecs.get(9),
+                            (Shelter.AgeRange) shelterSpecs.get(10));
                     adapter.add(temp.toString());
                     shelterList.add(temp);
 
