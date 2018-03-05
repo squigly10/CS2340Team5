@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myIntent.putExtra("phoneNumber", selected.getPhoneNumber());
         myIntent.putExtra("restrictions", selected.getRestrictions());
         myIntent.putExtra("shelterName", selected.getShelterName());
+        myIntent.putExtra("isFemale", selected.isFemale());
+        myIntent.putExtra("isMale", selected.isMale());
         myIntent.putExtra("specialNotes", selected.getSpecialNotes());
         startActivity(myIntent);
     }

@@ -32,6 +32,8 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
     private String phoneNumber;
     private String restrictions;
     private String shelterName;
+    private boolean isFemale;
+    private boolean isMale;
     private String specialNotes;
 
     @Override
@@ -46,6 +48,8 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         longitude = getIntent().getExtras().getDouble("longitude");
         phoneNumber = getIntent().getExtras().getString("phoneNumber");
         restrictions = getIntent().getExtras().getString("restrictions");
+        isFemale = getIntent().getExtras().getBoolean("isFemale", true);
+        isMale = getIntent().getExtras().getBoolean("isMale", true);
         specialNotes = getIntent().getExtras().getString("specialNotes");
 
         backButton = (Button) findViewById(R.id.buttonBack);
