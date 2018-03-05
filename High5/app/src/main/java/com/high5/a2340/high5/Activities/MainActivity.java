@@ -116,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         defaultValues.add("No Value");
         shelterKeys.add("Shelter Name");
         defaultValues.add("No Value");
+        shelterKeys.add("Females");
+        defaultValues.add(true);
+        shelterKeys.add("Males");
+        defaultValues.add(true);
         shelterKeys.add("Special Notes");
         defaultValues.add("No Value");
 
@@ -143,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             (String) shelterSpecs.get(4),
                             (String) shelterSpecs.get(5),
                             (String) shelterSpecs.get(6),
-                            (String) shelterSpecs.get(7));
+                            (boolean) shelterSpecs.get(7),
+                            (boolean) shelterSpecs.get(8),
+                            (String) shelterSpecs.get(9));
                     adapter.add(temp.toString());
                     shelterList.add(temp);
 
