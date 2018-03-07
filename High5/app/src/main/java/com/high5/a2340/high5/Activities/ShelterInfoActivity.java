@@ -8,12 +8,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.high5.a2340.high5.Model.Shelter;
+import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
 
 /**
  * Created by henri on 2/27/18.
  */
 
+//TODO: FIX LAYOUT, WORDS GET CUT OFF THE SIDE OF THE SCREEN
 public class ShelterInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -36,7 +38,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
     private boolean isFemale;
     private boolean isMale;
     private String specialNotes;
-    private Shelter.AgeRange shelterAgeRange;
+    private AgeRange shelterAgeRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         isFemale = getIntent().getExtras().getBoolean("isFemale", true);
         isMale = getIntent().getExtras().getBoolean("isMale", true);
         specialNotes = getIntent().getExtras().getString("specialNotes");
-        shelterAgeRange = (Shelter.AgeRange) getIntent().getExtras().getSerializable("shelterAgeRange");
+        shelterAgeRange = (AgeRange) getIntent().getExtras().getSerializable("shelterAgeRange");
 
         backButton = (Button) findViewById(R.id.buttonBack);
         nameField = (TextView) findViewById(R.id.textViewName);
@@ -78,6 +80,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    //TODO: MAKE THE BACK BUTTON TAKE YOU BACK TO PREVIOUS ACTIVITY, NOT NECESSARILY MAIN ACTIVITY
     @Override
     public void onClick(View view) {
         if (view == backButton) {

@@ -18,8 +18,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.high5.a2340.high5.Model.Shelter;
 import com.high5.a2340.high5.Model.UserTypes;
+import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth fireBaseAuth;
 
     private Button logoutButton;
+    private Button searchButton;
 
     private ListView listView;
 
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
+        searchButton = (Button) findViewById(R.id.searchButton);
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fireBaseAuth = FirebaseAuth.getInstance();
 
         logoutButton.setOnClickListener(this);
+        searchButton.setOnClickListener(this);
 
         listView.setOnItemClickListener(this);
 
@@ -72,6 +77,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view == logoutButton) {
             logout();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
+        if (view == searchButton) {
+            Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
+            myIntent.putExtra("shelterList", (Serializable) shelterList);
+            startActivity(myIntent);
         }
     }
 
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.dismiss();
     }
 
+    //TODO: I DONT THINK GENDER AND AGE RANGE FIELDS ARE POPULATED CORRECTLY
     private void populateShelters() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         shelterKeys = new ArrayList<>();
@@ -126,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shelterKeys.add("Special Notes");
         defaultValues.add("No Value");
         shelterKeys.add("Age Range");
-        defaultValues.add(Shelter.AgeRange.ANYONE);
+        defaultValues.add(AgeRange.ANYONE);
 
         mDatabase.child("shelter-data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -155,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             (boolean) shelterSpecs.get(7),
                             (boolean) shelterSpecs.get(8),
                             (String) shelterSpecs.get(9),
-                            (Shelter.AgeRange) shelterSpecs.get(10));
+                            (AgeRange) shelterSpecs.get(10));
                     adapter.add(temp.toString());
                     shelterList.add(temp);
 

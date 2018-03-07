@@ -2,11 +2,13 @@ package com.high5.a2340.high5.Model;
 
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * Created by david on 2/26/2018.
  */
 
-public class Shelter {
+public class Shelter implements Serializable{
     private String address;
     private String capacity;
     private double latitude;
@@ -17,13 +19,6 @@ public class Shelter {
     private boolean isFemale;
     private boolean isMale;
     private String specialNotes;
-
-    public enum AgeRange {
-        NEWBORNS,
-        CHILDREN,
-        YOUNGADULTS,
-        ANYONE
-    }
 
     private AgeRange shelterAgeRange;
 
