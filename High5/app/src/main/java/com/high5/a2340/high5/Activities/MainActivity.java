@@ -2,13 +2,19 @@ package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ToolbarWidgetWrapper;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private FirebaseAuth fireBaseAuth;
 
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ProgressDialog progressDialog;
     private ArrayAdapter adapter;
+    private android.support.v7.widget.Toolbar toolbar;
 
     public static final List<String> legalUserTypes = Arrays.asList(UserTypes.USER.getValue(),
             UserTypes.ADMIN.getValue(),
@@ -52,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logoutButton = (Button) findViewById(R.id.logoutButton);
-        searchButton = (Button) findViewById(R.id.searchButton);
+        //logoutButton = (Button) findViewById(R.id.logoutButton);
+        //searchButton = (Button) findViewById(R.id.searchButton);
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -61,8 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fireBaseAuth = FirebaseAuth.getInstance();
 
-        logoutButton.setOnClickListener(this);
-        searchButton.setOnClickListener(this);
+        toolbar = findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
+
+
+        //logoutButton.setOnClickListener(this);
+        //searchButton.setOnClickListener(this);
 
         listView.setOnItemClickListener(this);
 
@@ -73,17 +84,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view) {
-        if (view == logoutButton) {
-            logout();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }
-        if (view == searchButton) {
-            Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
-            myIntent.putExtra("shelterList", (Serializable) shelterList);
-            startActivity(myIntent);
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu );
+        return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.logout:
+                logout();
+                finish();
+                break;
+            case R.id.search:
+                Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
+                myIntent.putExtra("shelterList", (Serializable) shelterList);
+                startActivity(myIntent);
+                break;
+            default:
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -15,11 +15,9 @@ import com.high5.a2340.high5.R;
  * Created by henri on 2/27/18.
  */
 
-//TODO: FIX LAYOUT, WORDS GET CUT OFF THE SIDE OF THE SCREEN
-public class ShelterInfoActivity extends AppCompatActivity implements View.OnClickListener {
+public class ShelterInfoActivity extends AppCompatActivity  {
 
 
-    private Button backButton;
     private TextView nameField;
     private TextView capacityField;
     private TextView addressField;
@@ -57,7 +55,6 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         specialNotes = getIntent().getExtras().getString("specialNotes");
         shelterAgeRange = (AgeRange) getIntent().getExtras().getSerializable("shelterAgeRange");
 
-        backButton = (Button) findViewById(R.id.buttonBack);
         nameField = (TextView) findViewById(R.id.textViewName);
         capacityField = (TextView) findViewById(R.id.textViewCapacity);
         addressField = (TextView) findViewById(R.id.textViewAddress);
@@ -75,16 +72,10 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         phoneNumberField.setText(phoneNumber);
         genderField.setText(restrictions);
 
-        backButton.setOnClickListener(this);
 
 
     }
 
-    //TODO: MAKE THE BACK BUTTON TAKE YOU BACK TO PREVIOUS ACTIVITY, NOT NECESSARILY MAIN ACTIVITY
-    @Override
-    public void onClick(View view) {
-        if (view == backButton) {
-            startActivity(new Intent(ShelterInfoActivity.this, MainActivity.class));
-        }
-    }
+
+
 }

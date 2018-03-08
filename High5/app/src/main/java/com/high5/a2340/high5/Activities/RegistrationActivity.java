@@ -37,7 +37,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private EditText userPassword;
     private EditText userPasswordConfirmation;
     private Button signUpButton;
-    private Button backButton;
     private Spinner userTypeSpinner;
 
     private ProgressDialog progressDialog;
@@ -54,7 +53,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         userPassword = findViewById(R.id.passwordTextBox);
         userPasswordConfirmation = findViewById(R.id.confirmPasswordTextBox);
         signUpButton = findViewById(R.id.signInButton);
-        backButton = findViewById(R.id.backButton);
 
         //get spinner object and populate with UserTypes Enum
         userTypeSpinner = findViewById(R.id.userTypeSpinner);
@@ -63,7 +61,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         userTypeSpinner.setAdapter(userTypeAdapter);
 
         signUpButton.setOnClickListener(this);
-        backButton.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
     }
@@ -165,9 +162,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if (view == signUpButton) {
             createAccount();
-        }
-        if (view == backButton) {
-            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
         }
     }
 }

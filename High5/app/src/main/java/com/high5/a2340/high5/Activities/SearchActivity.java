@@ -3,6 +3,8 @@ package com.high5.a2340.high5.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,8 +32,6 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 
-    private Button backButton;
-    private Button searchButton;
     private EditText searchText;
     private Spinner ageSpinner;
     private CheckBox maleBox;
@@ -48,16 +48,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        backButton = (Button) findViewById(R.id.buttonBack);
-        searchButton = (Button) findViewById(R.id.buttonSearch);
+
         maleBox = (CheckBox) findViewById(R.id.maleBox);
         femaleBox = (CheckBox) findViewById(R.id.femaleBox);
         listView = (ListView) findViewById(R.id.listView);
         ageSpinner = (Spinner) findViewById(R.id.spinner);
         searchText = (EditText) findViewById(R.id.searchText);
 
-        searchButton.setOnClickListener(this);
-        backButton.setOnClickListener(this);
         listView.setOnItemClickListener(this);
 
         shelterList = (List<Shelter>) getIntent().getSerializableExtra("shelterList");
@@ -69,19 +66,28 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         ageSpinner.setAdapter(ageAdapter);
         ageSpinner.setSelection(ageAdapter.getPosition(AgeRange.ANYONE));
         listView.setAdapter(listAdapter);
+
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter();
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
-        if (view == backButton) {
-            startActivity(new Intent(SearchActivity.this, MainActivity.class));
-        }
-        if (view == searchButton){
-            listAdapter.clear();
-            filteredList.clear();
-            filter();
-            listView.setAdapter(listAdapter);
-        }
+        //TODO; WHEN CLICKED GO TO SHELTER INFO
     }
 
     @Override
@@ -104,6 +110,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     //TODO: IMPLEMENT PARTIAL SEARCH AND FUZZY SEARCH
     private void filter(){
+        listAdapter.clear();
+        filteredList.clear();
         boolean male = maleBox.isChecked();
         boolean female = femaleBox.isChecked();
         AgeRange age = (AgeRange) ageSpinner.getSelectedItem();
@@ -115,13 +123,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         }
-        if (!text.equals("Search")){
+        if (!text.equals("")){
             Iterator<Shelter> iter = filteredList.iterator();
 
             while (iter.hasNext()) {
                 Shelter temp = iter.next();
 
-                if (!text.equals(temp.getShelterName())){
+                if (!temp.getShelterName().toLowerCase().contains(text.toLowerCase())){
                     iter.remove();
                 }
             }
@@ -129,6 +137,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         for (Shelter temp : filteredList){
             listAdapter.add(temp);
         }
+        listView.setAdapter(listAdapter);
     }
 }
 
