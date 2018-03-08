@@ -39,6 +39,7 @@
             android:inputType="textEmailAddress"
             android:padding="4dp"
             android:textColor="@color/textColor"
+            android:textColorHint="@color/textColorDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,6 +54,7 @@
             android:inputType="textPassword"
             android:padding="5dp"
             android:textColor="@color/textColor"
+            android:textColorHint="@color/textColorDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailTextBox" />
 
@@ -63,6 +65,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:text="Sign In"
+            android:textColor="@color/textColor"
+            android:background="@color/colorPrimaryDark"
             app:layout_constraintBottom_toTopOf="@+id/registrationButton"
             app:layout_constraintStart_toStartOf="parent" />
 
