@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public List<Shelter> shelterList;
     private DatabaseReference mDatabase;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         progressDialog.dismiss();
     }
 
-    //TODO: I DONT THINK GENDER AND AGE RANGE FIELDS ARE POPULATED CORRECTLY
     private void populateShelters() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         shelterKeys = new ArrayList<>();

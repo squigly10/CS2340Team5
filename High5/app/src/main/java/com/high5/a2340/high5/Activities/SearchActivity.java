@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,7 +30,7 @@ import java.util.List;
 
 
 //TODO: WHEN THE KEYBOARD POPS UP TO ENTER TEXT IT FUCKS UP THE LAYOUT
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class SearchActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     private EditText searchText;
@@ -66,6 +67,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         ageSpinner.setAdapter(ageAdapter);
         ageSpinner.setSelection(ageAdapter.getPosition(AgeRange.ANYONE));
         listView.setAdapter(listAdapter);
+        filter();
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,11 +85,19 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 filter();
             }
         });
-    }
 
-    @Override
-    public void onClick(View view) {
-        //TODO; WHEN CLICKED GO TO SHELTER INFO
+        maleBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filter();
+            }
+        });
+        femaleBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filter();
+            }
+        });
     }
 
     @Override
@@ -108,7 +118,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         startActivity(myIntent);
     }
 
-    //TODO: IMPLEMENT PARTIAL SEARCH AND FUZZY SEARCH
+    //TODO: IMPLEMENT FUZZY SEARCH
     private void filter(){
         listAdapter.clear();
         filteredList.clear();
@@ -117,7 +127,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         AgeRange age = (AgeRange) ageSpinner.getSelectedItem();
         String text = searchText.getText().toString();
         for (int i = 0; i < shelterList.size(); i++) {
-            if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
+            if (male && female ){
+                filteredList.add(shelterList.get(i));
+            }else if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
                 if(shelterList.get(i).getAgeRange() == age || age == AgeRange.ANYONE) {
                     filteredList.add(shelterList.get(i));
                 }

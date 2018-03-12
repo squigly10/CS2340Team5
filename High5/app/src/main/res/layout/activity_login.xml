@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:text="Sign In Here"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@color/textColor"
+            android:textColor="@color/textHint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,8 +38,8 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:padding="4dp"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColorDark"
+            android:textColor="@color/textColorDark"
+            android:textColorHint="@color/textHint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,8 +53,8 @@
             android:hint="Enter Password"
             android:inputType="textPassword"
             android:padding="5dp"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColorDark"
+            android:textColor="@color/textColorDark"
+            android:textColorHint="@color/textHint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailTextBox" />
 
