@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by david on 2/26/2018.
  */
 
-public class Shelter implements Serializable{
+public class Shelter implements Serializable {
     private String address;
     private String capacity;
     private double latitude;
@@ -19,7 +19,7 @@ public class Shelter implements Serializable{
     private boolean isFemale;
     private boolean isMale;
     private String specialNotes;
-
+    private Integer currentAvailability;
     private AgeRange shelterAgeRange;
 
 
@@ -41,6 +41,11 @@ public class Shelter implements Serializable{
         this.isMale = isMale;
         this.specialNotes = specialNotes;
         this.shelterAgeRange = shelterAgeRange;
+        try  {
+            this.currentAvailability = Integer.parseInt(capacity);
+        } catch (NumberFormatException e) {
+            this.currentAvailability = -1;
+        }
 
     }
 
@@ -105,4 +110,12 @@ public class Shelter implements Serializable{
     public void setAgeRange(AgeRange age) { shelterAgeRange = age; }
 
     public String toString() {return shelterName; }
+
+    public int getCurrentAvailability() {
+        return currentAvailability;
+    }
+
+    public void setCurrentAvailability(int currentAvailability) {
+        this.currentAvailability = currentAvailability;
+    }
 }

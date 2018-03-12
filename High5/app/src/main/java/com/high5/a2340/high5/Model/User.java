@@ -9,11 +9,13 @@ public class User {
     private String email;
     private String passWord;
     private String userType;
+    private boolean hasReservation;
 
     public User(String email, String passWord, String userType) {
         this.email = email;
         this.passWord = passWord;
         this.userType = userType;
+        this.hasReservation = false;
     }
 
     public String getUserType() {

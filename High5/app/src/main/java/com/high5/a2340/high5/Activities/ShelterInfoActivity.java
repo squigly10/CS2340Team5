@@ -11,6 +11,8 @@ import com.high5.a2340.high5.Model.Shelter;
 import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by henri on 2/27/18.
  */
@@ -25,6 +27,9 @@ public class ShelterInfoActivity extends AppCompatActivity  {
     private TextView longitudeField;
     private TextView phoneNumberField;
     private TextView genderField;
+    private TextView currentAvailabilityCount;
+
+    private Shelter currentShelter;
 
     private String address;
     private String capacity;
@@ -37,23 +42,28 @@ public class ShelterInfoActivity extends AppCompatActivity  {
     private boolean isMale;
     private String specialNotes;
     private AgeRange shelterAgeRange;
+    private Integer currentAvailability;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shelter_info);
 
-        address = getIntent().getExtras().getString("address");
-        capacity = getIntent().getExtras().getString("capacity");
-        shelterName = getIntent().getExtras().getString("shelterName");
-        latitude = getIntent().getExtras().getDouble("latitude");
-        longitude = getIntent().getExtras().getDouble("longitude");
-        phoneNumber = getIntent().getExtras().getString("phoneNumber");
-        restrictions = getIntent().getExtras().getString("restrictions");
-        isFemale = getIntent().getExtras().getBoolean("isFemale", true);
-        isMale = getIntent().getExtras().getBoolean("isMale", true);
-        specialNotes = getIntent().getExtras().getString("specialNotes");
-        shelterAgeRange = (AgeRange) getIntent().getExtras().getSerializable("shelterAgeRange");
+        currentShelter = (Shelter) getIntent().getExtras().getSerializable("shelter");
+
+        address = currentShelter.getAddress();
+        capacity = currentShelter.getCapacity();
+        shelterName = currentShelter.getShelterName();
+        latitude = currentShelter.getLatitude();
+        longitude = currentShelter.getLongitude();
+        phoneNumber = currentShelter.getPhoneNumber();
+        restrictions = currentShelter.getRestrictions();
+        isFemale = currentShelter.isFemale();
+        isMale = currentShelter.isMale();
+        specialNotes = currentShelter.getSpecialNotes();
+        shelterAgeRange = currentShelter.getAgeRange();
+        currentAvailability = currentShelter.getCurrentAvailability();
 
         nameField = (TextView) findViewById(R.id.textViewName);
         capacityField = (TextView) findViewById(R.id.textViewCapacity);
@@ -62,6 +72,8 @@ public class ShelterInfoActivity extends AppCompatActivity  {
         longitudeField = (TextView) findViewById(R.id.textViewLong);
         phoneNumberField = (TextView) findViewById(R.id.textViewPhone);
         genderField = (TextView) findViewById(R.id.textViewGender);
+        currentAvailabilityCount = (TextView) findViewById(R.id.currentAvailabilityCount);
+
 
 
         nameField.setText(shelterName);
@@ -71,9 +83,11 @@ public class ShelterInfoActivity extends AppCompatActivity  {
         longitudeField.setText(longitude.toString());
         phoneNumberField.setText(phoneNumber);
         genderField.setText(restrictions);
-
-
-
+        if (currentAvailability >= 0) {
+            currentAvailabilityCount.setText(currentAvailability.toString());
+        } else {
+            currentAvailabilityCount.setText("Please Contact Shelter");
+        }
     }
 
 
