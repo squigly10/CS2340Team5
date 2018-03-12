@@ -119,17 +119,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Shelter selected = shelterList.get(position);
         Intent myIntent = new Intent(MainActivity.this, ShelterInfoActivity.class);
-        myIntent.putExtra("address", selected.getAddress());
-        myIntent.putExtra("capacity", selected.getCapacity());
-        myIntent.putExtra("latitude", selected.getLatitude());
-        myIntent.putExtra("longitude", selected.getLongitude());
-        myIntent.putExtra("phoneNumber", selected.getPhoneNumber());
-        myIntent.putExtra("restrictions", selected.getRestrictions());
-        myIntent.putExtra("shelterName", selected.getShelterName());
-        myIntent.putExtra("isFemale", selected.isFemale());
-        myIntent.putExtra("isMale", selected.isMale());
-        myIntent.putExtra("specialNotes", selected.getSpecialNotes());
-        myIntent.putExtra("shelterAgeRange", selected.getAgeRange());
+        myIntent.putExtra("shelter", selected);
         startActivity(myIntent);
     }
 

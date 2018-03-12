@@ -10,7 +10,9 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="45dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -166,5 +168,22 @@
                 android:text="TextView" />
         </TableRow>
     </TableLayout>
+
+    <TextView
+        android:id="@+id/currentText"
+        android:layout_width="150dp"
+        android:layout_height="46dp"
+        android:text="Current Availability:"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="437dp" />
+
+    <TextView
+        android:id="@+id/currentAvailabilityCount"
+        android:layout_width="66dp"
+        android:layout_height="47dp"
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="437dp" />
 
 </android.support.constraint.ConstraintLayout>
