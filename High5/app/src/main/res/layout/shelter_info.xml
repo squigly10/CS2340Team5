@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="45dp">
+        tools:layout_editor_absoluteY="0dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -173,17 +173,42 @@
         android:id="@+id/currentText"
         android:layout_width="150dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="84dp"
+        android:layout_marginStart="16dp"
         android:text="Current Availability:"
         android:textAlignment="center"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="437dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/currentAvailabilityCount"
-        android:layout_width="66dp"
+        android:layout_width="178dp"
         android:layout_height="47dp"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="437dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/currentText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/currentText" />
+
+    <Spinner
+        android:id="@+id/numberOfBedsSpinner"
+        android:layout_width="177dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/currentAvailabilityCount"
+        app:layout_constraintTop_toBottomOf="@+id/currentAvailabilityCount" />
+
+    <Button
+        android:id="@+id/reserveBedButton"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Reserve Beds"
+        app:layout_constraintEnd_toStartOf="@+id/currentAvailabilityCount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/currentText"
+        app:layout_constraintTop_toBottomOf="@+id/currentText" />
 
 </android.support.constraint.ConstraintLayout>

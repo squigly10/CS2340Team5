@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.high5.a2340.high5.Model.Shelter;
+import com.high5.a2340.high5.Model.User;
 import com.high5.a2340.high5.Model.UserTypes;
 import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
@@ -35,14 +37,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private FirebaseAuth fireBaseAuth;
-
-    private Button logoutButton;
-    private Button searchButton;
+    //variables for cancelReservation()
+    private DatabaseReference userDbReference;
+    private DatabaseReference shelterDbReference;
+    Long shelterKey;
+    Long numberOfBeds;
+    Shelter currentShelter;
+    private String userID;
+    private User currentUser;
 
     private ListView listView;
+    ArrayAdapter<String> adapter;
 
     private ProgressDialog progressDialog;
-    private ArrayAdapter adapter;
     private android.support.v7.widget.Toolbar toolbar;
 
     public static final List<String> legalUserTypes = Arrays.asList(UserTypes.USER.getValue(),
@@ -59,8 +66,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //logoutButton = (Button) findViewById(R.id.logoutButton);
-        //searchButton = (Button) findViewById(R.id.searchButton);
+        listView = (ListView) findViewById(R.id.listView);
+
+        progressDialog = new ProgressDialog(this);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        fireBaseAuth = FirebaseAuth.getInstance();
+
+        toolbar = findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
+
+        listView.setOnItemClickListener(this);
+
+        adapter = new ArrayAdapter(this, R.layout.simple_list_item);
+        listView.setAdapter(adapter);
+        populateShelters();
+        userID = FirebaseAuth.getInstance().getUid();
+        userDbReference = FirebaseDatabase.getInstance().getReference("users/" + userID);
+        //Get user Info
+        userDbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+        shelterDbReference = FirebaseDatabase.getInstance().getReference("shelter-data/");
+    }
+
+
+    protected void onResume() {
+        super.onResume();
+
+        fireBaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -71,15 +116,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
 
-
-        //logoutButton.setOnClickListener(this);
-        //searchButton.setOnClickListener(this);
-
         listView.setOnItemClickListener(this);
 
         adapter = new ArrayAdapter(this, R.layout.simple_list_item);
         listView.setAdapter(adapter);
         populateShelters();
+        userID = FirebaseAuth.getInstance().getUid();
+        userDbReference = FirebaseDatabase.getInstance().getReference("users/" + userID);
+        //Get user Info
+        userDbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+        shelterDbReference = FirebaseDatabase.getInstance().getReference("shelter-data/");
 
     }
 
@@ -87,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu );
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -97,19 +153,59 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.logout:
                 logout();
                 finish();
-                break;
+                return true;
             case R.id.search:
                 Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
                 myIntent.putExtra("shelterList", (Serializable) shelterList);
                 startActivity(myIntent);
-                break;
+                return true;
+            case R.id.cancelReservation:
+                cancelReservation();
+                return true;
             default:
-
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
+    private void cancelReservation() {
+        if (!currentUser.isHasReservation()) {
+            Toast.makeText(MainActivity.this, "You have no active reservations",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            userDbReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    shelterKey = Long.parseLong(String.valueOf(dataSnapshot.child("reservation-info").child("shelter-key").getValue()));
+                    numberOfBeds = Long.parseLong(String.valueOf(dataSnapshot.child("reservation-info").child("beds-reserved").getValue()));
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // ...
+                }
+            });
+            shelterDbReference.child(shelterKey + "").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    currentShelter = dataSnapshot.getValue(Shelter.class);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // ...
+                }
+            });
+            Toast.makeText(MainActivity.this, "Shelter key is" + shelterKey,
+                    Toast.LENGTH_LONG).show();
+            /*
+            currentShelter.setCurrentAvailability(currentShelter.getCurrentAvailability() + numberOfBeds);
+            shelterDbReference.child(shelterKey + "").setValue(currentShelter);
+            currentUser.setHasReservation(false);
+            userDbReference.setValue(currentUser);
+            */
+            //userDbReference.child("reservation-info").setValue(null);
+        }
+    }
 
 
 
@@ -131,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     //TODO: I DONT THINK GENDER AND AGE RANGE FIELDS ARE POPULATED CORRECTLY
     private void populateShelters() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         shelterKeys = new ArrayList<>();
         shelterList = new ArrayList<>();
         defaultValues = new ArrayList();
@@ -157,12 +252,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         defaultValues.add("No Value");
         shelterKeys.add("Age Range");
         defaultValues.add(AgeRange.ANYONE);
+        shelterKeys.add("Unique Key");
+        defaultValues.add(new Long(0));
 
-        mDatabase.child("shelter-data").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("shelter-data").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressDialog.setMessage("Retrieving Data");
                 progressDialog.show();
+                adapter.clear();
+                shelterList.clear();
                 for (DataSnapshot shelter : dataSnapshot.getChildren()) {
                     List shelterSpecs = new ArrayList();
                     int index = 0;
@@ -185,18 +284,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             (boolean) shelterSpecs.get(7),
                             (boolean) shelterSpecs.get(8),
                             (String) shelterSpecs.get(9),
-                            (AgeRange) shelterSpecs.get(10));
+                            (AgeRange) shelterSpecs.get(10),
+                            (Long) shelterSpecs.get(11));
                     adapter.add(temp.toString());
+
                     shelterList.add(temp);
+                    adapter.notifyDataSetChanged();
 
                 }
                 progressDialog.dismiss();
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+        Toast.makeText(MainActivity.this, "You have no active reservations",
+                Toast.LENGTH_LONG).show();
     }
 }

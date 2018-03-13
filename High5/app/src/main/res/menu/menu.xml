@@ -7,6 +7,9 @@
         android:title="@string/search_name"
         app:showAsAction="never"></item>
     <item
+        android:id="@+id/cancelReservation"
+        android:title="Cancel Reservation" />
+    <item
         android:id="@+id/logout"
         android:title="@string/logout_name"
         app:showAsAction="never"></item>

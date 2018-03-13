@@ -11,6 +11,10 @@ public class User {
     private String userType;
     private boolean hasReservation;
 
+    public User() {
+        //default constructor for firebase getValue() function;
+    }
+
     public User(String email, String passWord, String userType) {
         this.email = email;
         this.passWord = passWord;
@@ -40,5 +44,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isHasReservation() {
+        return hasReservation;
+    }
+
+    public void setHasReservation(boolean hasReservation) {
+        this.hasReservation = hasReservation;
     }
 }
