@@ -1,4 +1,4 @@
-package com.high5.a2340.high5.Activities;
+package com.high5.a2340.high5.Registration;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,13 +20,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.high5.a2340.high5.Activities.MainActivity;
 import com.high5.a2340.high5.Model.User;
 import com.high5.a2340.high5.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
+public class Administrator_Registration_Activity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
 
@@ -37,14 +38,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private EditText userPassword;
     private EditText userPasswordConfirmation;
     private Button signUpButton;
-    private Spinner userTypeSpinner;
 
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_administrator_registration_);
 
         firebaseAuth = FirebaseAuth.getInstance();
         Database = FirebaseDatabase.getInstance().getReference();
@@ -55,10 +55,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         signUpButton = findViewById(R.id.signInButton);
 
         //get spinner object and populate with UserTypes Enum
-        userTypeSpinner = findViewById(R.id.userTypeSpinner);
+
         ArrayAdapter<String> userTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, MainActivity.legalUserTypes);
         userTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        userTypeSpinner.setAdapter(userTypeAdapter);
+
 
         signUpButton.setOnClickListener(this);
 
@@ -68,7 +68,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public void createAccount() {
         final String email = userEmail.getText().toString().trim();
         final String password = userPassword.getText().toString().trim();
-        final String userType = userTypeSpinner.getSelectedItem().toString();
+        final String userType = "Administrator";
 
         if (!validateForm()) {
             return;
@@ -88,16 +88,16 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             User newUser = new User(email, password, userType);
                             Database.child("users").child(userID).setValue(newUser);
 
-                            startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                            startActivity(new Intent(Administrator_Registration_Activity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             if (task.getException().getMessage().contains("The email address is already in use by another account.")) {
-                                Toast.makeText(RegistrationActivity.this,
+                                Toast.makeText(Administrator_Registration_Activity.this,
                                         "The email address is already in use by another account.",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                Toast.makeText(Administrator_Registration_Activity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -117,7 +117,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             valid = false;
         }
         else if (!isEmailValid(email)) {
-            Toast.makeText(RegistrationActivity.this, "Please enter valid email address.",
+            Toast.makeText(Administrator_Registration_Activity.this, "Please enter valid email address.",
                     Toast.LENGTH_SHORT).show();
             valid = false;
         }

@@ -2,5 +2,8 @@
     <string name="app_name">High5</string>
     <string name="logout_name">Logout</string>
     <string name="search_name">Search</string>
+    <string name="user">User</string>
+    <string name="administrator">Administrator</string>
+    <string name="employee">Employee</string>
     <string name="sign_up">Sign Up</string>
 </resources>

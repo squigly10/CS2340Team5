@@ -2,31 +2,34 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loginButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.high5.a2340.high5.Activities.LoginActivity">
+    tools:context="com.high5.a2340.high5.Registration.Employee_Registration_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="50dp">
+        android:paddingTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/signInText"
+            android:id="@+id/signUpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="Sign In Here"
+            android:text="Employee Sign Up"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/textHint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <EditText
             android:id="@+id/emailTextBox"
@@ -37,11 +40,10 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="4dp"
             android:textColor="@color/textColorDark"
             android:textColorHint="@color/textHint"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/userTypeSpinner" />
 
         <EditText
             android:id="@+id/passwordTextBox"
@@ -52,11 +54,24 @@
             android:ems="10"
             android:hint="Enter Password"
             android:inputType="textPassword"
-            android:padding="5dp"
             android:textColor="@color/textColorDark"
             android:textColorHint="@color/textHint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailTextBox" />
+
+        <EditText
+            android:id="@+id/confirmPasswordTextBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColor="@color/textColorDark"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTextBox" />
 
         <Button
             android:id="@+id/signInButton"
@@ -65,22 +80,10 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/roundedbutton"
-            android:text="Sign In"
+            android:text="Sign Up"
             android:textColor="@color/textColor"
             app:layout_constraintBottom_toTopOf="@+id/registrationButton"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/registrationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Sign Up"
-            android:textColor="@color/textColorDark"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="438dp" />
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

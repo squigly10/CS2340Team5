@@ -119,7 +119,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         for (int i = 0; i < shelterList.size(); i++) {
             if (male && female ){
                 filteredList.add(shelterList.get(i));
-            }else if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
+            } else if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
                 if(shelterList.get(i).getAgeRange() == age || age == AgeRange.ANYONE) {
                     filteredList.add(shelterList.get(i));
                 }

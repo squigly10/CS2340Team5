@@ -9,16 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.MainActivity"/>
-        <activity android:name=".Activities.ShelterInfoActivity"/>
-        <activity android:name=".Activities.SearchActivity"/>
-        <activity android:name=".Activities.LoginActivity" >
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.ShelterInfoActivity" />
+        <activity android:name=".Activities.SearchActivity" />
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegistrationActivity"/>
+        <activity android:name=".Registration.UserRegistrationActivity" />
+        <activity android:name=".Activities.UserStatusActivity" />
+        <activity android:name=".Registration.Administrator_Registration_Activity" />
+        <activity android:name=".Registration.Employee_Registration_Activity"></activity>
     </application>
 
 </manifest>
