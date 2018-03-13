@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ToolbarWidgetWrapper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //variables for cancelReservation()
     private DatabaseReference userDbReference;
     private DatabaseReference shelterDbReference;
-    Long shelterKey;
-    Long numberOfBeds;
-    Shelter currentShelter;
+    private long shelterKey;
+    private long numberOfBeds;
+    private long currentAvailability;
     private String userID;
     private User currentUser;
 
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // ...
             }
         });
-        shelterDbReference = FirebaseDatabase.getInstance().getReference("shelter-data/");
+        shelterDbReference = FirebaseDatabase.getInstance().getReference("shelter-data");
 
     }
 
@@ -172,11 +173,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Toast.makeText(MainActivity.this, "You have no active reservations",
                     Toast.LENGTH_LONG).show();
         } else {
-            userDbReference.addValueEventListener(new ValueEventListener() {
+            userDbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                //gets user data
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    shelterKey = Long.parseLong(String.valueOf(dataSnapshot.child("reservation-info").child("shelter-key").getValue()));
-                    numberOfBeds = Long.parseLong(String.valueOf(dataSnapshot.child("reservation-info").child("beds-reserved").getValue()));
+                    shelterKey = (long) dataSnapshot.child("reservation-info").child("shelter-key").getValue();
+                    numberOfBeds = (long) dataSnapshot.child("reservation-info").child("beds-reserved").getValue();
+                    //change shelter data
+                    shelterDbReference.child(String.valueOf(shelterKey)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            currentAvailability = (long) dataSnapshot.child("currentAvailability").getValue();
+                            shelterDbReference.child(shelterKey + "").child("currentAvailability").setValue(currentAvailability + numberOfBeds);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // ...
+                        }
+                    });
                 }
 
                 @Override
@@ -184,26 +199,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     // ...
                 }
             });
-            shelterDbReference.child(shelterKey + "").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    currentShelter = dataSnapshot.getValue(Shelter.class);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // ...
-                }
-            });
-            Toast.makeText(MainActivity.this, "Shelter key is" + shelterKey,
-                    Toast.LENGTH_LONG).show();
-            /*
-            currentShelter.setCurrentAvailability(currentShelter.getCurrentAvailability() + numberOfBeds);
-            shelterDbReference.child(shelterKey + "").setValue(currentShelter);
             currentUser.setHasReservation(false);
-            userDbReference.setValue(currentUser);
-            */
-            //userDbReference.child("reservation-info").setValue(null);
+            userDbReference.child("hasReservation").setValue(currentUser.isHasReservation());
+            Toast.makeText(MainActivity.this, "Reservation Cancelled.",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -253,7 +252,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         shelterKeys.add("Age Range");
         defaultValues.add(AgeRange.ANYONE);
         shelterKeys.add("Unique Key");
-        defaultValues.add(new Long(0));
+        defaultValues.add((long) 0);
+        shelterKeys.add("currentAvailability");
+        defaultValues.add((long)-1);
 
         mDatabase.child("shelter-data").addValueEventListener(new ValueEventListener() {
             @Override
@@ -285,7 +286,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             (boolean) shelterSpecs.get(8),
                             (String) shelterSpecs.get(9),
                             (AgeRange) shelterSpecs.get(10),
-                            (Long) shelterSpecs.get(11));
+                            (long) shelterSpecs.get(11),
+                            (long) shelterSpecs.get(12));
                     adapter.add(temp.toString());
 
                     shelterList.add(temp);
@@ -301,7 +303,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             }
         });
-        Toast.makeText(MainActivity.this, "You have no active reservations",
-                Toast.LENGTH_LONG).show();
+
     }
 }

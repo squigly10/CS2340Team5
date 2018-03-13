@@ -60,7 +60,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
     private boolean isMale;
     private String specialNotes;
     private AgeRange shelterAgeRange;
-    private Integer currentAvailability;
+    private long currentAvailability;
 
 
     @Override
@@ -128,7 +128,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         phoneNumberField.setText(phoneNumber);
         genderField.setText(restrictions);
         if (currentAvailability >= 0) {
-            currentAvailabilityCount.setText(currentAvailability.toString());
+            currentAvailabilityCount.setText(currentAvailability + "");
         } else {
             currentAvailabilityCount.setText("Please Contact Shelter");
         }
@@ -199,7 +199,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         phoneNumberField.setText(phoneNumber);
         genderField.setText(restrictions);
         if (currentAvailability >= 0) {
-            currentAvailabilityCount.setText(currentAvailability.toString());
+            currentAvailabilityCount.setText(currentAvailability + "");
         } else {
             currentAvailabilityCount.setText("Please Contact Shelter");
         }
@@ -228,12 +228,12 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
             } else {
                 currentAvailability = currentAvailability - numberOfBedSpots;
                 currentUser.setHasReservation(true);
-                userDbReference.setValue(currentUser);
+                userDbReference.child("hasReservation").setValue(currentUser.isHasReservation());
                 userDbReference.child("reservation-info").child("shelter-key").setValue(currentShelter.getUniqueKey());
                 userDbReference.child("reservation-info").child("beds-reserved").setValue(numberOfBedSpots);
                 currentShelter.setCurrentAvailability(currentAvailability);
-                shelterDbReference.setValue(currentShelter);
-                currentAvailabilityCount.setText(currentAvailability.toString());
+                shelterDbReference.child("currentAvailability").setValue(currentShelter.getCurrentAvailability());
+                currentAvailabilityCount.setText(currentAvailability + "");
                 Toast.makeText(ShelterInfoActivity.this, "Reservation Successful",
                         Toast.LENGTH_LONG).show();
             }
