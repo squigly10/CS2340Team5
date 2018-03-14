@@ -8,6 +8,7 @@ public enum AgeRange {
     ANYONE("Anyone"),
     NEWBORNS("Families with newborns"),
     CHILDREN("Children"),
+    WOMENANDCHILDREN("Women/Children"),
     YOUNGADULTS("Young Adults"),
     FAMILIES("Families");
 
