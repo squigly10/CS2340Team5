@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.high5.a2340.high5.Model.Shelter;
@@ -28,7 +31,6 @@ import java.util.List;
  */
 
 
-//TODO: WHEN THE KEYBOARD POPS UP TO ENTER TEXT IT FUCKS UP THE LAYOUT
 public class SearchActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
@@ -41,6 +43,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     private ArrayAdapter listAdapter;
     private ArrayAdapter<AgeRange> ageAdapter;
     private ListView listView;
+    private TextView emptyText;
 
 
     @Override
@@ -54,6 +57,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         listView = (ListView) findViewById(R.id.listView);
         ageSpinner = (Spinner) findViewById(R.id.spinner);
         searchText = (EditText) findViewById(R.id.searchText);
+        emptyText = (TextView) findViewById(R.id.emptyTextView);
 
         listView.setOnItemClickListener(this);
 
@@ -66,8 +70,17 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         ageSpinner.setAdapter(ageAdapter);
         ageSpinner.setSelection(ageAdapter.getPosition(AgeRange.ANYONE));
         listView.setAdapter(listAdapter);
-        filter();
+        ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filter();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -116,10 +129,10 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         AgeRange age = (AgeRange) ageSpinner.getSelectedItem();
         String text = searchText.getText().toString();
         for (int i = 0; i < shelterList.size(); i++) {
-            if (male && female ){
-                filteredList.add(shelterList.get(i));
-            } else if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
-                if(shelterList.get(i).getAgeRange() == age || age == AgeRange.ANYONE) {
+            if(shelterList.get(i).getAgeRange().equals(age) || age.equals(AgeRange.ANYONE)) {
+                if (male && female) {
+                    filteredList.add(shelterList.get(i));
+                } else if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
                     filteredList.add(shelterList.get(i));
                 }
             }
@@ -139,6 +152,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             listAdapter.add(temp);
         }
         listView.setAdapter(listAdapter);
+        listView.setEmptyView(emptyText);
     }
+
 }
 
