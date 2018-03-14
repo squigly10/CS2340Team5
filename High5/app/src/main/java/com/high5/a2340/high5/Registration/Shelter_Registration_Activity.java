@@ -102,8 +102,8 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
         if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
             phoneNumber.setError("Required");
             status = false;
-        } else if (phoneNumber.getText().toString().length() != 9) {
-            phoneNumber.setError("Please enter a 9 digit number");
+        } else if (phoneNumber.getText().toString().length() != 10) {
+            phoneNumber.setError("Please enter a 10 digit number");
             status = false;
         }
         if (TextUtils.isEmpty(capacity.getText().toString())) {
