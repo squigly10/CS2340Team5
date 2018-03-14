@@ -19,10 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registration.UserRegistrationActivity" />
+        <activity android:name=".Registration.User_Registration_Activity" />
         <activity android:name=".Activities.UserStatusActivity" />
         <activity android:name=".Registration.Administrator_Registration_Activity" />
-        <activity android:name=".Registration.Employee_Registration_Activity"></activity>
+        <activity android:name=".Registration.Employee_Registration_Activity" />
+        <activity android:name=".Registration.Shelter_Registration_Activity"></activity>
     </application>
 
 </manifest>

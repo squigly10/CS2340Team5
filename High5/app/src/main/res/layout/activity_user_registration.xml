@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.high5.a2340.high5.Registration.UserRegistrationActivity">
+    tools:context="com.high5.a2340.high5.Registration.User_Registration_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"

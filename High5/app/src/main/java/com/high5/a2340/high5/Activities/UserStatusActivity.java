@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.high5.a2340.high5.R;
 import com.high5.a2340.high5.Registration.Administrator_Registration_Activity;
 import com.high5.a2340.high5.Registration.Employee_Registration_Activity;
-import com.high5.a2340.high5.Registration.UserRegistrationActivity;
+import com.high5.a2340.high5.Registration.User_Registration_Activity;
 
 public class UserStatusActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,7 +35,7 @@ public class UserStatusActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         if (view == User) {
-            startActivity(new Intent(UserStatusActivity.this, UserRegistrationActivity.class));
+            startActivity(new Intent(UserStatusActivity.this, User_Registration_Activity.class));
         }
         if (view == Administrator) {
             startActivity(new Intent(UserStatusActivity.this, Administrator_Registration_Activity.class));

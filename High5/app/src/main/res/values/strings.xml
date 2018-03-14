@@ -6,4 +6,5 @@
     <string name="administrator">Administrator</string>
     <string name="employee">Employee</string>
     <string name="sign_up">Sign Up</string>
+    <string name="verticalPadding">20dp</string>
 </resources>

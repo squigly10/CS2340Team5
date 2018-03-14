@@ -1,7 +1,5 @@
 package com.high5.a2340.high5.Model;
 
-import android.util.Log;
-
 import java.io.Serializable;
 
 /**

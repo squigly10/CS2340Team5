@@ -1,17 +1,12 @@
 package com.high5.a2340.high5.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.high5.a2340.high5.Model.Shelter;
 import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by henri on 2/27/18.
@@ -26,8 +21,11 @@ public class ShelterInfoActivity extends AppCompatActivity  {
     private TextView latitudeField;
     private TextView longitudeField;
     private TextView phoneNumberField;
+    private TextView restrictionsField;
+    private TextView ageRangeField;
     private TextView genderField;
     private TextView currentAvailabilityCount;
+    private TextView specialNotesField;
 
     private Shelter currentShelter;
 
@@ -71,8 +69,11 @@ public class ShelterInfoActivity extends AppCompatActivity  {
         latitudeField = (TextView) findViewById(R.id.textViewLat);
         longitudeField = (TextView) findViewById(R.id.textViewLong);
         phoneNumberField = (TextView) findViewById(R.id.textViewPhone);
+        restrictionsField = (TextView) findViewById(R.id.textViewRestrictions);
+        ageRangeField = (TextView) findViewById(R.id.textViewAgeRange) ;
         genderField = (TextView) findViewById(R.id.textViewGender);
-        currentAvailabilityCount = (TextView) findViewById(R.id.currentAvailabilityCount);
+        specialNotesField = (TextView) findViewById(R.id.textViewSpecialNotes);
+        currentAvailabilityCount = (TextView) findViewById(R.id.textViewCurrentAvailability);
 
 
 
@@ -81,8 +82,22 @@ public class ShelterInfoActivity extends AppCompatActivity  {
         addressField.setText(address);
         latitudeField.setText(latitude.toString());
         longitudeField.setText(longitude.toString());
+        phoneNumber = String.valueOf(phoneNumber).replaceFirst("(\\d{3})(\\d{3})(\\d+)",
+                "($1) $2-$3");
         phoneNumberField.setText(phoneNumber);
-        genderField.setText(restrictions);
+        restrictionsField.setText(restrictions);
+        ageRangeField.setText(shelterAgeRange.toString());
+        if (isFemale && isMale) {
+            genderField.setText("Men and Women");
+        } else if (isFemale) {
+            genderField.setText("Women Only");
+        } else if (isMale) {
+            genderField.setText("Men Only");
+        } else {
+            genderField.setText("Anyone");
+        }
+
+        specialNotesField.setText(specialNotes);
         if (currentAvailability >= 0) {
             currentAvailabilityCount.setText(currentAvailability.toString());
         } else {

@@ -80,6 +80,17 @@
             android:textColor="@color/textColorDark"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="438dp" />
+        <TextView
+            android:id="@+id/addShelterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Add new Shelter"
+            android:textColor="@color/textColorDark"
+            tools:layout_editor_absoluteX="163dp"
+            tools:layout_editor_absoluteY="438dp" />
+
 
     </LinearLayout>
 

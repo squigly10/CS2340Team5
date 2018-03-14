@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,7 +26,7 @@ import com.high5.a2340.high5.R;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
+public class User_Registration_Activity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
 
@@ -88,16 +87,16 @@ public class UserRegistrationActivity extends AppCompatActivity implements View.
                             User newUser = new User(email, password, userType);
                             Database.child("users").child(userID).setValue(newUser);
 
-                            startActivity(new Intent(UserRegistrationActivity.this, MainActivity.class));
+                            startActivity(new Intent(User_Registration_Activity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             if (task.getException().getMessage().contains("The email address is already in use by another account.")) {
-                                Toast.makeText(UserRegistrationActivity.this,
+                                Toast.makeText(User_Registration_Activity.this,
                                         "The email address is already in use by another account.",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(UserRegistrationActivity.this, "Authentication failed.",
+                                Toast.makeText(User_Registration_Activity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -117,7 +116,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements View.
             valid = false;
         }
         else if (!isEmailValid(email)) {
-            Toast.makeText(UserRegistrationActivity.this, "Please enter valid email address.",
+            Toast.makeText(User_Registration_Activity.this, "Please enter valid email address.",
                     Toast.LENGTH_SHORT).show();
             valid = false;
         }

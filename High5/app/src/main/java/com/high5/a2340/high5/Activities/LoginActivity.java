@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.high5.a2340.high5.R;
+import com.high5.a2340.high5.Registration.Shelter_Registration_Activity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText emailText;
     private EditText passwordText;
     private TextView signInButton;
+    private TextView addShelterButton;
 
     private ProgressDialog progressDialog;
 
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         fireBaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = fireBaseAuth.getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser != null && !currentUser.isAnonymous()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
 
@@ -47,12 +49,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailText = (EditText) findViewById((R.id.emailTextBox));
         passwordText = (EditText) findViewById((R.id.passwordTextBox));
         signInButton = (TextView) findViewById((R.id.registrationButton));
+        addShelterButton = (TextView) findViewById(R.id.addShelterButton);
 
         progressDialog = new ProgressDialog(this);
 
 
         loginButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
+        addShelterButton.setOnClickListener(this);
 
     }
 
@@ -101,6 +105,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         if (view ==  signInButton) {
             startActivity(new Intent(LoginActivity.this, UserStatusActivity.class));
+        }
+        if (view ==  addShelterButton) {
+            startActivity(new Intent(LoginActivity.this, Shelter_Registration_Activity.class));
         }
     }
 }

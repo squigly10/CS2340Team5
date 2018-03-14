@@ -2,10 +2,8 @@ package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -48,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static final List<String> legalUserTypes = Arrays.asList(UserTypes.USER.getValue(),
             UserTypes.ADMIN.getValue(),
             UserTypes.EMPLOYEE.getValue());
-
     public List<String> shelterKeys;
     public List defaultValues;
     public List<Shelter> shelterList;
@@ -135,28 +131,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         shelterKeys = new ArrayList<>();
         shelterList = new ArrayList<>();
         defaultValues = new ArrayList();
-        shelterKeys.add("Address");
+        shelterKeys.add("address");
         defaultValues.add("No Value");
-        shelterKeys.add("Capacity");
-        defaultValues.add("No Value");
-        shelterKeys.add("Latitude");
+        shelterKeys.add("capacity");
+        defaultValues.add(0L);
+        shelterKeys.add("latitude");
         defaultValues.add(0.0);
-        shelterKeys.add("Longitude");
+        shelterKeys.add("longitude");
         defaultValues.add(0.0);
-        shelterKeys.add("Phone Number");
+        shelterKeys.add("phoneNumber");
         defaultValues.add("No Value");
-        shelterKeys.add("Restrictions");
+        shelterKeys.add("restrictions");
         defaultValues.add("No Value");
-        shelterKeys.add("Shelter Name");
+        shelterKeys.add("shelterName");
         defaultValues.add("No Value");
-        shelterKeys.add("Females");
+        shelterKeys.add("female");
         defaultValues.add(true);
-        shelterKeys.add("Males");
+        shelterKeys.add("male");
         defaultValues.add(true);
-        shelterKeys.add("Special Notes");
+        shelterKeys.add("specialNotes");
         defaultValues.add("No Value");
-        shelterKeys.add("Age Range");
-        defaultValues.add(AgeRange.ANYONE);
+        shelterKeys.add("ageRange");
+        defaultValues.add("ANYONE");
 
         mDatabase.child("shelter-data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -185,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             (boolean) shelterSpecs.get(7),
                             (boolean) shelterSpecs.get(8),
                             (String) shelterSpecs.get(9),
-                            (AgeRange) shelterSpecs.get(10));
+                            AgeRange.valueOf((String) shelterSpecs.get(10)));
                     adapter.add(temp.toString());
                     shelterList.add(temp);
 
