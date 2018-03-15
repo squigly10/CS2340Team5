@@ -29,7 +29,6 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
     private static final String TAG = "EmailPassword";
 
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference Database;
 
     private EditText name;
     private EditText address;
@@ -56,7 +55,6 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_registration_);
 
-        Database = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInAnonymously();
 

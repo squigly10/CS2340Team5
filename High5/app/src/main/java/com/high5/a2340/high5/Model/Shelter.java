@@ -19,6 +19,7 @@ public class Shelter implements Serializable {
     private String specialNotes;
     private Integer currentAvailability;
     private AgeRange shelterAgeRange;
+    private String shelterID;
 
 
     public Shelter() {
@@ -27,9 +28,11 @@ public class Shelter implements Serializable {
 
     public Shelter(String address, String capacity, double latitude, double longitude,
                    String phoneNumber, String restrictions, String shelterName, boolean isFemale,
-                   boolean isMale, String specialNotes, AgeRange shelterAgeRange) {
+                   boolean isMale, String specialNotes, AgeRange shelterAgeRange, String shelterID,
+                   int currentAvailability) {
         this.address = address;
         this.capacity = capacity;
+        this.currentAvailability = currentAvailability;
         this.latitude = latitude;
         this.longitude = longitude;
         this.phoneNumber = phoneNumber;
@@ -39,11 +42,7 @@ public class Shelter implements Serializable {
         this.isMale = isMale;
         this.specialNotes = specialNotes;
         this.shelterAgeRange = shelterAgeRange;
-        try  {
-            this.currentAvailability = Integer.parseInt(capacity);
-        } catch (NumberFormatException e) {
-            this.currentAvailability = -1;
-        }
+        this.shelterID = shelterID;
 
     }
 
@@ -112,6 +111,8 @@ public class Shelter implements Serializable {
     public int getCurrentAvailability() {
         return currentAvailability;
     }
+
+    public String getShelterID() {return shelterID; }
 
     public void setCurrentAvailability(int currentAvailability) {
         this.currentAvailability = currentAvailability;

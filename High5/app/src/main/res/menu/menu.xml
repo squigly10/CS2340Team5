@@ -11,6 +11,10 @@
         app:showAsAction="always"></item>
 
     <item
+        android:id="@+id/cancelReservation"
+        android:title="Cancel Reservation"
+        app:showAsAction="never"></item>
+    <item
         android:id="@+id/logout"
         android:title="@string/logout_name"
         app:showAsAction="never"></item>
