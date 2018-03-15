@@ -185,7 +185,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
                     String location = (String) dataSnapshot.child("reservations")
                             .child(userID).child("location").getValue();
                     Double currentReservation = Double.valueOf(dataSnapshot.child("reservations")
-                            .child(userID).child(location).getValue().toString());
+                            .child(userID).child("numberOfSpots").getValue().toString());
                     String displayString = "You currently have a reservation at " + location
                             + " for "
                             + currentReservation.intValue() + " spots.";
