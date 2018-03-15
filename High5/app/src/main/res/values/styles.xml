@@ -4,11 +4,16 @@
     </style>
 
 
-        <!-- Customize your theme here. -->
+        <!-- Action Bar Theme. -->
     <style name="CustomToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- menu item color -->
+        <item name="android:textColor">@color/textColorDark</item>
+        <!-- Color of three dots -->
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
 
     </style>
 
@@ -16,7 +21,7 @@
     <style name="CustomPopupStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorAccent</item>
         <item name="overlapAnchor">false</item>
-        <item name="android:dropDownVerticalOffset">-4dp</item>
+        <item name="android:dropDownVerticalOffset">-7dp</item>
     </style>
 
 </resources>
