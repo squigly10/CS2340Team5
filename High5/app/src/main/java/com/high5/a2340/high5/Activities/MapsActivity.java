@@ -1,5 +1,12 @@
 package com.high5.a2340.high5.Activities;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+
+import com.high5.a2340.high5.Model.Shelter;
+
+import java.util.List;package com.high5.a2340.high5.Activities;
+
 /**
  * Created by hsmul on 3/27/2018.
  */
