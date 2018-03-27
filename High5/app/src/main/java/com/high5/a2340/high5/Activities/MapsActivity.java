@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.high5.a2340.high5.Model.Shelter;
 
-import java.util.List;package com.high5.a2340.high5.Activities;
+import java.util.List;
 
 /**
  * Created by hsmul on 3/27/2018.
