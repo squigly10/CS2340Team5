@@ -51,8 +51,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .snippet(e.getPhoneNumber()));
         }
         //move camera to focus on first shelter in the list
-        Shelter example = shelterList.get(0);
-        LatLng pos = new LatLng(example.getLatitude(), example.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+        if (shelterList.size() != 0) {
+            Shelter example = shelterList.get(0);
+            LatLng pos = new LatLng(example.getLatitude(), example.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+        } else {
+            LatLng pos = new LatLng(33.749, -84.388);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+        }
     }
 }
