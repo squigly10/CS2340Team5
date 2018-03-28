@@ -47,7 +47,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a markers
         for (Shelter e : shelterList) {
             LatLng pos = new LatLng(e.getLatitude(), e.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(pos).title(e.getShelterName()));
+            mMap.addMarker(new MarkerOptions().position(pos).title(e.getShelterName())
+                    .snippet(e.getPhoneNumber()));
         }
         //move camera to focus on first shelter in the list
         Shelter example = shelterList.get(0);
