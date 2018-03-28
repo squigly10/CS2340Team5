@@ -29,6 +29,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/mapButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Map View" />
+
         <EditText
             android:id="@+id/searchText"
             android:layout_width="match_parent"

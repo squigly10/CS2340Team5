@@ -7,6 +7,7 @@
     <string name="employee">Employee</string>
     <string name="sign_up">Sign Up</string>
     <string name="verticalPadding">20dp</string>
+    <string name="google_maps_api_key">AIzaSyCKVJKJYfNTjxbC1cxYYMMRiq56fulVtg8</string>
 
 
     <string-array name="reserveSpotArray">

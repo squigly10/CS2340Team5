@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.high5.a2340.high5.Model.Shelter;
 import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +40,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     private Spinner ageSpinner;
     private CheckBox maleBox;
     private CheckBox femaleBox;
+    private Button mapButton;
     private List<Shelter> shelterList;
     private List<Shelter> filteredList;
     private ArrayAdapter listAdapter;
@@ -58,6 +61,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         ageSpinner = (Spinner) findViewById(R.id.spinner);
         searchText = (EditText) findViewById(R.id.searchText);
         emptyText = (TextView) findViewById(R.id.emptyTextView);
+        mapButton = (Button) findViewById(R.id.mapButton);
+
 
         listView.setOnItemClickListener(this);
 
@@ -70,6 +75,15 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         ageSpinner.setAdapter(ageAdapter);
         ageSpinner.setSelection(ageAdapter.getPosition(AgeRange.ANYONE));
         listView.setAdapter(listAdapter);
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(SearchActivity.this, MapsActivity.class);
+                myIntent.putExtra("shelterList", (Serializable) filteredList);
+                startActivity(myIntent);
+            }
+        });
+
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +133,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         myIntent.putExtra("shelter", selected);
         startActivity(myIntent);
     }
+
 
     //TODO: IMPLEMENT FUZZY SEARCH
     private void filter(){

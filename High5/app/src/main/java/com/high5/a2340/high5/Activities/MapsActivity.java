@@ -2,7 +2,7 @@ package com.high5.a2340.high5.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-
+import com.high5.a2340.high5.R;
 import com.high5.a2340.high5.Model.Shelter;
 
 import java.util.List;
@@ -46,12 +46,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a markers
         for (Shelter e : shelterList) {
-            LatLng pos = new LatLng(e.getLatitude(), e.getLatitude());
+            LatLng pos = new LatLng(e.getLatitude(), e.getLongitude());
             mMap.addMarker(new MarkerOptions().position(pos).title(e.getShelterName()));
         }
         //move camera to focus on first shelter in the list
         Shelter example = shelterList.get(0);
-        LatLng pos = new LatLng(example.getLatitude(), example.getLatitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng());
+        LatLng pos = new LatLng(example.getLatitude(), example.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
 }
