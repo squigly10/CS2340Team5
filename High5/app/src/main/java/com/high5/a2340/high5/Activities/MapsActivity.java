@@ -6,6 +6,7 @@ import com.high5.a2340.high5.R;
 import com.high5.a2340.high5.Model.Shelter;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by hsmul on 3/27/2018.
@@ -48,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (Shelter e : shelterList) {
             LatLng pos = new LatLng(e.getLatitude(), e.getLongitude());
             mMap.addMarker(new MarkerOptions().position(pos).title(e.getShelterName())
-                    .snippet(e.getPhoneNumber()));
+                    .snippet(formatPhoneNumber(e.getPhoneNumber())));
         }
         //move camera to focus on first shelter in the list
         if (shelterList.size() != 0) {
@@ -59,5 +60,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng pos = new LatLng(33.749, -84.388);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
         }
+    }
+
+    public String formatPhoneNumber(String input) {
+        StringJoiner result = new StringJoiner("-");
+        input = cleanString(input);
+        int length = input.length();
+        int max = length - 2 * Math.floorMod(3 - length, 3);
+        for (int i = 0; i < max; i += 3) {
+            result.add(input.substring(i, i + 3));
+        }
+        for (int i = max; i < length; i += 4) {
+            result.add(input.substring(i, i + 4));
+        }
+        return result.toString();
+    }
+
+    private String cleanString(String input) {
+        return input.replaceAll("[^\\d]", "");
     }
 }
