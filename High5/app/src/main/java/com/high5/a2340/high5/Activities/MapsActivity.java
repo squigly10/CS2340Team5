@@ -27,6 +27,7 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final float INITIAL_ZOOM = 8.0f;
     private GoogleMap mMap;
     private List<Shelter> shelterList;
     @Override
@@ -49,34 +50,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (Shelter e : shelterList) {
             LatLng pos = new LatLng(e.getLatitude(), e.getLongitude());
             mMap.addMarker(new MarkerOptions().position(pos).title(e.getShelterName())
-                    .snippet(formatPhoneNumber(e.getPhoneNumber())));
+                    .snippet(formatPhoneNum(e.getPhoneNumber())));
         }
         //move camera to focus on first shelter in the list
         if (shelterList.size() != 0) {
             Shelter example = shelterList.get(0);
             LatLng pos = new LatLng(example.getLatitude(), example.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(INITIAL_ZOOM));
         } else {
             LatLng pos = new LatLng(33.749, -84.388);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
         }
     }
 
-    public String formatPhoneNumber(String input) {
-        StringJoiner result = new StringJoiner("-");
-        input = cleanString(input);
+    public String formatPhoneNum(String input) {
+        StringJoiner finalPhone = new StringJoiner("-");
+        input = cleanupString(input);
         int length = input.length();
         int max = length - 2 * Math.floorMod(3 - length, 3);
         for (int i = 0; i < max; i += 3) {
-            result.add(input.substring(i, i + 3));
+            finalPhone.add(input.substring(i, i + 3));
         }
         for (int i = max; i < length; i += 4) {
-            result.add(input.substring(i, i + 4));
+            finalPhone.add(input.substring(i, i + 4));
         }
-        return result.toString();
+        return finalPhone.toString();
     }
 
-    private String cleanString(String input) {
+    private String cleanupString(String input) {
         return input.replaceAll("[^\\d]", "");
     }
 }
