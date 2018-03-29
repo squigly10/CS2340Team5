@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private static final float INITIAL_ZOOM = 8.0f;
+    private static final float INITIAL_ZOOM = 12.0f;
     private GoogleMap mMap;
     private List<Shelter> shelterList;
     @Override
