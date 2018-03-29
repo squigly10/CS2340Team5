@@ -82,7 +82,7 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
     public void onClick(View v) {
         if (v == addShelter) {
             if (validateEntries()) {
-                signUp();
+                addShelter();
             }
         }
 
@@ -121,7 +121,7 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
         firebaseAuth.getCurrentUser().delete();
         finish();
     }
-    private void signUp() {
+    private void addShelter() {
         progressDialog.setMessage("Shelter is being Added");
         progressDialog.show();
         try {
