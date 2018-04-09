@@ -44,10 +44,6 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
 
     private Button addShelter;
 
-    private SpinnerAdapter restrictionsAdapter;
-
-    private DatabaseReference mDatabase;
-
     private ProgressDialog progressDialog;
 
     @Override
@@ -70,7 +66,7 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
         female = (CheckBox) findViewById(R.id.femaleCheckbox);
 
         addShelter = (Button) findViewById(R.id.addShelterButton);
-        restrictionsAdapter = new ArrayAdapter<AgeRange>(this, android.R.layout.simple_spinner_item, AgeRange.values());
+        SpinnerAdapter restrictionsAdapter = new ArrayAdapter<AgeRange>(this, android.R.layout.simple_spinner_item, AgeRange.values());
         ageRange.setAdapter(restrictionsAdapter);
         ageRange.setSelection(0);
         progressDialog = new ProgressDialog(this);
@@ -125,7 +121,7 @@ public class Shelter_Registration_Activity extends AppCompatActivity implements 
         progressDialog.setMessage("Shelter is being Added");
         progressDialog.show();
         try {
-            mDatabase = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
             String uID = firebaseAuth.getUid();
             DatabaseReference shelter = mDatabase.child("shelter-data").child(uID);
             shelter.child("shelterName").setValue(name.getText().toString());

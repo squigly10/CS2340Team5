@@ -2,6 +2,7 @@ package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -41,11 +42,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Button logoutButton;
     private Button searchButton;
 
-    private ListView listView;
-
     private ProgressDialog progressDialog;
     private ArrayAdapter adapter;
-    private android.support.v7.widget.Toolbar toolbar;
 
     public static final List<String> legalUserTypes = Arrays.asList(UserTypes.USER.getValue(),
             UserTypes.ADMIN.getValue(),
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
 
-        listView = (ListView) findViewById(R.id.listView);
+        ListView listView = (ListView) findViewById(R.id.listView);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         fireBaseAuth = FirebaseAuth.getInstance();
 
-        toolbar = findViewById(R.id.action_bar);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
 
 
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Drawable drawable = menu.getItem(i).getIcon();
             if(drawable != null) {
                 drawable.mutate();
-                drawable.setColorFilter(getResources().getColor(R.color.colorPrimary)
+                drawable.setColorFilter(getResources().getColor(R.color.colorPrimary, null)
                         , PorterDuff.Mode.SRC_ATOP);
             }
         }

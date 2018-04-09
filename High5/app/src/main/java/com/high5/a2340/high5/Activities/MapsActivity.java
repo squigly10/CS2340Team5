@@ -28,7 +28,6 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final float INITIAL_ZOOM = 12.0f;
-    private GoogleMap mMap;
     private List<Shelter> shelterList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
         // Add a markers
         for (Shelter e : shelterList) {
@@ -66,14 +65,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public String formatPhoneNum(String input) {
         StringJoiner finalPhone = new StringJoiner("-");
-        input = cleanupString(input);
-        int length = input.length();
+        String cleaned = cleanupString(input);
+        int length = cleaned.length();
         int max = length - 2 * Math.floorMod(3 - length, 3);
         for (int i = 0; i < max; i += 3) {
-            finalPhone.add(input.substring(i, i + 3));
+            finalPhone.add(cleaned.substring(i, i + 3));
         }
         for (int i = max; i < length; i += 4) {
-            finalPhone.add(input.substring(i, i + 4));
+            finalPhone.add(cleaned.substring(i, i + 4));
         }
         return finalPhone.toString();
     }

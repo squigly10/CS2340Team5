@@ -40,11 +40,9 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     private Spinner ageSpinner;
     private CheckBox maleBox;
     private CheckBox femaleBox;
-    private Button mapButton;
     private List<Shelter> shelterList;
     private List<Shelter> filteredList;
     private ArrayAdapter listAdapter;
-    private ArrayAdapter<AgeRange> ageAdapter;
     private ListView listView;
     private TextView emptyText;
 
@@ -61,7 +59,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         ageSpinner = (Spinner) findViewById(R.id.spinner);
         searchText = (EditText) findViewById(R.id.searchText);
         emptyText = (TextView) findViewById(R.id.emptyTextView);
-        mapButton = (Button) findViewById(R.id.mapButton);
+        Button mapButton = (Button) findViewById(R.id.mapButton);
 
 
         listView.setOnItemClickListener(this);
@@ -71,7 +69,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         listAdapter = new ArrayAdapter(this, R.layout.simple_list_item);
 
-        ageAdapter = new ArrayAdapter<AgeRange>(this, android.R.layout.simple_spinner_item, AgeRange.values());
+        ArrayAdapter<AgeRange> ageAdapter = new ArrayAdapter<AgeRange>(this, android.R.layout.simple_spinner_item, AgeRange.values());
         ageSpinner.setAdapter(ageAdapter);
         ageSpinner.setSelection(ageAdapter.getPosition(AgeRange.ANYONE));
         listView.setAdapter(listAdapter);

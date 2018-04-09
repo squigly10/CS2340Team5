@@ -28,76 +28,48 @@ import com.high5.a2340.high5.R;
 public class ShelterInfoActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
 
-
-    private TextView nameField;
-    private TextView capacityField;
-    private TextView addressField;
-    private TextView latitudeField;
-    private TextView longitudeField;
-    private TextView phoneNumberField;
-    private TextView restrictionsField;
-    private TextView ageRangeField;
-    private TextView genderField;
-    private TextView currentAvailabilityCount;
-    private TextView specialNotesField;
-
-    private Shelter currentShelter;
-
-    private String address;
-    private String capacity;
-    private Double latitude;
-    private Double longitude;
-    private String phoneNumber;
-    private String restrictions;
-    private String shelterName;
-    private boolean isFemale;
-    private boolean isMale;
-    private String specialNotes;
-    private AgeRange shelterAgeRange;
-    private Integer currentAvailability;
     private String shelterID;
+    private String shelterName;
 
     private Button reserveButton;
-    private Spinner reserveSpinner;
     private Double numberOfSpaces = 0.0;
 
     private DatabaseReference mDatabase;
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shelter_info);
 
-        currentShelter = (Shelter) getIntent().getExtras().getSerializable("shelter");
+        Shelter currentShelter = (Shelter) getIntent().getExtras().getSerializable("shelter");
 
-        address = currentShelter.getAddress();
-        capacity = currentShelter.getCapacity();
+        String address = currentShelter.getAddress();
+        String capacity = currentShelter.getCapacity();
         shelterName = currentShelter.getShelterName();
-        latitude = currentShelter.getLatitude();
-        longitude = currentShelter.getLongitude();
-        phoneNumber = currentShelter.getPhoneNumber();
-        restrictions = currentShelter.getRestrictions();
-        isFemale = currentShelter.isFemale();
-        isMale = currentShelter.isMale();
-        specialNotes = currentShelter.getSpecialNotes();
-        shelterAgeRange = currentShelter.getAgeRange();
-        currentAvailability = currentShelter.getCurrentAvailability();
+        Double latitude = currentShelter.getLatitude();
+        Double longitude = currentShelter.getLongitude();
+        String phoneNumber = currentShelter.getPhoneNumber();
+        String restrictions = currentShelter.getRestrictions();
+        boolean isFemale = currentShelter.isFemale();
+        boolean isMale = currentShelter.isMale();
+        String specialNotes = currentShelter.getSpecialNotes();
+        AgeRange shelterAgeRange = currentShelter.getAgeRange();
+        Integer currentAvailability = currentShelter.getCurrentAvailability();
         shelterID = currentShelter.getShelterID();
 
-        nameField = (TextView) findViewById(R.id.textViewName);
-        capacityField = (TextView) findViewById(R.id.textViewCapacity);
-        addressField = (TextView) findViewById(R.id.textViewAddress);
-        latitudeField = (TextView) findViewById(R.id.textViewLat);
-        longitudeField = (TextView) findViewById(R.id.textViewLong);
-        phoneNumberField = (TextView) findViewById(R.id.textViewPhone);
-        restrictionsField = (TextView) findViewById(R.id.textViewRestrictions);
-        ageRangeField = (TextView) findViewById(R.id.textViewAgeRange);
-        genderField = (TextView) findViewById(R.id.textViewGender);
-        specialNotesField = (TextView) findViewById(R.id.textViewSpecialNotes);
-        currentAvailabilityCount = (TextView) findViewById(R.id.textViewCurrentAvailability);
+        TextView nameField = (TextView) findViewById(R.id.textViewName);
+        TextView capacityField = (TextView) findViewById(R.id.textViewCapacity);
+        TextView addressField = (TextView) findViewById(R.id.textViewAddress);
+        TextView latitudeField = (TextView) findViewById(R.id.textViewLat);
+        TextView longitudeField = (TextView) findViewById(R.id.textViewLong);
+        TextView phoneNumberField = (TextView) findViewById(R.id.textViewPhone);
+        TextView restrictionsField = (TextView) findViewById(R.id.textViewRestrictions);
+        TextView ageRangeField = (TextView) findViewById(R.id.textViewAgeRange);
+        TextView genderField = (TextView) findViewById(R.id.textViewGender);
+        TextView specialNotesField = (TextView) findViewById(R.id.textViewSpecialNotes);
+        TextView currentAvailabilityCount = (TextView) findViewById(R.id.textViewCurrentAvailability);
 
-        reserveSpinner = (Spinner) findViewById(R.id.reserveSpinner);
+        Spinner reserveSpinner = (Spinner) findViewById(R.id.reserveSpinner);
         reserveButton = (Button) findViewById(R.id.reserveButton);
 
 

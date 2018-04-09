@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,6 @@ public class Administrator_Registration_Activity extends AppCompatActivity imple
     private static final String TAG = "EmailPassword";
 
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference Database;
 
     private EditText userEmail;
     private EditText userPassword;
@@ -47,7 +47,6 @@ public class Administrator_Registration_Activity extends AppCompatActivity imple
         setContentView(R.layout.activity_administrator_registration_);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        Database = FirebaseDatabase.getInstance().getReference();
 
         userEmail = findViewById(R.id.emailTextBox);
         userPassword = findViewById(R.id.passwordTextBox);
@@ -66,8 +65,6 @@ public class Administrator_Registration_Activity extends AppCompatActivity imple
     }
 
     public void createAccount() {
-        final String email = userEmail.getText().toString().trim();
-        final String password = userPassword.getText().toString().trim();
         final String userType = "Administrator";
 
         if (!validateForm()) {
@@ -75,8 +72,12 @@ public class Administrator_Registration_Activity extends AppCompatActivity imple
         }
         progressDialog.setMessage("Logging in...");
         progressDialog.show();
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        Editable usrTxt = userEmail.getText();
+        String usrString = usrTxt.toString();
+        Editable passTxt = userPassword.getText();
+        String passString = passTxt.toString();
+        Task<AuthResult> authTask = firebaseAuth.createUserWithEmailAndPassword(usrString.trim(), passString.trim());
+        authTask.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -85,8 +86,8 @@ public class Administrator_Registration_Activity extends AppCompatActivity imple
 
                             // Add new user information into the database
                             String userID = firebaseAuth.getUid();
-                            User newUser = new User(email, password, userType);
-                            Database.child("users").child(userID).setValue(newUser);
+                            User newUser = new User(userEmail.getText().toString().trim(), userPassword.getText().toString().trim(), userType);
+                            FirebaseDatabase.getInstance().getReference().child("users").child(userID).setValue(newUser);
 
                             startActivity(new Intent(Administrator_Registration_Activity.this, MainActivity.class));
                         } else {
@@ -153,7 +154,7 @@ public class Administrator_Registration_Activity extends AppCompatActivity imple
         return valid;
     }
     public static boolean isEmailValid(String email) {
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        String expression = "^[\\w\\\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
