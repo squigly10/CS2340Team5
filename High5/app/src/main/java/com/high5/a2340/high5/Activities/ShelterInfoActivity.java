@@ -11,18 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.high5.a2340.high5.Model.Shelter;
-import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
 
 /**
- * Created by henri on 2/27/18.
+ * Created by Henri
+ * 2/27/18
  */
 
 public class ShelterInfoActivity extends AppCompatActivity implements View.OnClickListener,
@@ -53,24 +52,25 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         boolean isFemale = currentShelter.isFemale();
         boolean isMale = currentShelter.isMale();
         String specialNotes = currentShelter.getSpecialNotes();
-        AgeRange shelterAgeRange = currentShelter.getAgeRange();
+        String shelterAgeRange = currentShelter.getAgeRange().toString();
         Integer currentAvailability = currentShelter.getCurrentAvailability();
         shelterID = currentShelter.getShelterID();
 
-        TextView nameField = (TextView) findViewById(R.id.textViewName);
-        TextView capacityField = (TextView) findViewById(R.id.textViewCapacity);
-        TextView addressField = (TextView) findViewById(R.id.textViewAddress);
-        TextView latitudeField = (TextView) findViewById(R.id.textViewLat);
-        TextView longitudeField = (TextView) findViewById(R.id.textViewLong);
-        TextView phoneNumberField = (TextView) findViewById(R.id.textViewPhone);
-        TextView restrictionsField = (TextView) findViewById(R.id.textViewRestrictions);
-        TextView ageRangeField = (TextView) findViewById(R.id.textViewAgeRange);
-        TextView genderField = (TextView) findViewById(R.id.textViewGender);
-        TextView specialNotesField = (TextView) findViewById(R.id.textViewSpecialNotes);
-        TextView currentAvailabilityCount = (TextView) findViewById(R.id.textViewCurrentAvailability);
+        TextView nameField = findViewById(R.id.textViewName);
+        TextView capacityField = findViewById(R.id.textViewCapacity);
+        TextView addressField = findViewById(R.id.textViewAddress);
+        TextView latitudeField = findViewById(R.id.textViewLat);
+        TextView longitudeField = findViewById(R.id.textViewLong);
+        TextView phoneNumberField = findViewById(R.id.textViewPhone);
+        TextView restrictionsField = findViewById(R.id.textViewRestrictions);
+        TextView ageRangeField = findViewById(R.id.textViewAgeRange);
+        TextView genderField = findViewById(R.id.textViewGender);
+        TextView specialNotesField = findViewById(R.id.textViewSpecialNotes);
+        TextView currentAvailabilityCount = findViewById(R.id
+                .textViewCurrentAvailability);
 
-        Spinner reserveSpinner = (Spinner) findViewById(R.id.reserveSpinner);
-        reserveButton = (Button) findViewById(R.id.reserveButton);
+        Spinner reserveSpinner = findViewById(R.id.reserveSpinner);
+        reserveButton = findViewById(R.id.reserveButton);
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -91,7 +91,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
                 "($1) $2-$3");
         phoneNumberField.setText(phoneNumber);
         restrictionsField.setText(restrictions);
-        ageRangeField.setText(shelterAgeRange.toString());
+        ageRangeField.setText(shelterAgeRange);
         if (isFemale && isMale) {
             genderField.setText("Men and Women");
         } else if (isFemale) {
@@ -176,7 +176,7 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String temp = parent.getItemAtPosition(position).toString();
-        if (temp.equals("-")) {
+        if ("-".equals(temp)) {
             numberOfSpaces = 0.0;
         } else {
             numberOfSpaces = Double.valueOf(temp);

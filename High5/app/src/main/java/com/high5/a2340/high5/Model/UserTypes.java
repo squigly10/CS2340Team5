@@ -1,20 +1,25 @@
 package com.high5.a2340.high5.Model;
 
 /**
- * Created by david on 2/19/2018.
+ *  An enum for types of users
+ *  @author Tom
+ *  @version 1.4
  */
-
 public enum UserTypes {
     USER("User"),
     ADMIN("Administrator"),
     EMPLOYEE("Employee");
 
-    String value;
+    final String value;
 
     UserTypes(String value) {
         this.value = value;
     }
 
+    /**
+     * Gets the current user type
+     * @return  this.value      the current user type
+     */
     public String getValue() {
         return this.value;
     }

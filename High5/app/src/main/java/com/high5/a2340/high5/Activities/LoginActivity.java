@@ -20,6 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.high5.a2340.high5.R;
 import com.high5.a2340.high5.Registration.Shelter_Registration_Activity;
 
+/**
+ *  Activity for logging in a user to the system
+ *  @author High5
+ *  @version 1.4
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -41,15 +46,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         fireBaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = fireBaseAuth.getCurrentUser();
-        if (currentUser != null && !currentUser.isAnonymous()) {
+        if ((currentUser != null) && (!currentUser.isAnonymous())) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
 
-        loginButton = (Button) findViewById(R.id.signInButton);
-        emailText = (EditText) findViewById((R.id.emailTextBox));
-        passwordText = (EditText) findViewById((R.id.passwordTextBox));
-        signInButton = (TextView) findViewById((R.id.registrationButton));
-        addShelterButton = (TextView) findViewById(R.id.addShelterButton);
+        loginButton = findViewById(R.id.signInButton);
+        emailText = findViewById((R.id.emailTextBox));
+        passwordText = findViewById((R.id.passwordTextBox));
+        signInButton = findViewById((R.id.registrationButton));
+        addShelterButton = findViewById(R.id.addShelterButton);
 
         progressDialog = new ProgressDialog(this);
 
@@ -61,19 +66,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public void signIn() {
+    private void signIn() {
         String email = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
-        if (email.length() == 0 && password.length() == 0) {
+        if ((email.isEmpty()) && (password.isEmpty())) {
             emailText.setError("Required");
             passwordText.setError("Required");
             return;
         }
-        if (email.length() == 0 ) {
+        if (email.isEmpty()) {
             emailText.setError("Required");
             return;
         }
-        if (password.length() == 0) {
+        if (password.isEmpty()) {
             passwordText.setError("Required");
             return;
         }
@@ -86,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = fireBaseAuth.getCurrentUser();
+                            //FirebaseUser user = fireBaseAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.

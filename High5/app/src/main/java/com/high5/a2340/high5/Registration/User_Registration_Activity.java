@@ -26,6 +26,11 @@ import com.high5.a2340.high5.R;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *  Activity for registering a new User looking for shelters
+ *  @author High5
+ *  @version 1.4
+ */
 public class User_Registration_Activity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -55,7 +60,8 @@ public class User_Registration_Activity extends AppCompatActivity implements Vie
 
         //get spinner object and populate with UserTypes Enum
 
-        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, MainActivity.legalUserTypes);
+        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, MainActivity.legalUserTypes);
         userTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -64,7 +70,7 @@ public class User_Registration_Activity extends AppCompatActivity implements Vie
         progressDialog = new ProgressDialog(this);
     }
 
-    public void createAccount() {
+    private void createAccount() {
         final String email = userEmail.getText().toString().trim();
         final String password = userPassword.getText().toString().trim();
         final String userType = "User";
@@ -87,16 +93,20 @@ public class User_Registration_Activity extends AppCompatActivity implements Vie
                             User newUser = new User(email, password, userType);
                             Database.child("users").child(userID).setValue(newUser);
 
-                            startActivity(new Intent(User_Registration_Activity.this, MainActivity.class));
+                            startActivity(new Intent(User_Registration_Activity
+                                    .this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            if (task.getException().getMessage().contains("The email address is already in use by another account.")) {
+                            if (task.getException().getMessage().contains("The email address " +
+                                    "is already in use by another account.")) {
                                 Toast.makeText(User_Registration_Activity.this,
-                                        "The email address is already in use by another account.",
+                                        "The email address is already in use by another " +
+                                                "account.",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(User_Registration_Activity.this, "Authentication failed.",
+                                Toast.makeText(User_Registration_Activity.this,
+                                        "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -116,7 +126,8 @@ public class User_Registration_Activity extends AppCompatActivity implements Vie
             valid = false;
         }
         else if (!isEmailValid(email)) {
-            Toast.makeText(User_Registration_Activity.this, "Please enter valid email address.",
+            Toast.makeText(User_Registration_Activity.this,
+                    "Please enter valid email address.",
                     Toast.LENGTH_SHORT).show();
             valid = false;
         }
@@ -151,7 +162,7 @@ public class User_Registration_Activity extends AppCompatActivity implements Vie
 
         return valid;
     }
-    public static boolean isEmailValid(String email) {
+    private static boolean isEmailValid(String email) {
         String expression = "^[\\w\\\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);

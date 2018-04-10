@@ -2,7 +2,6 @@ package com.high5.a2340.high5.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.high5.a2340.high5.Model.Shelter;
-import com.high5.a2340.high5.Model.User;
 import com.high5.a2340.high5.Model.UserTypes;
 import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.R;
@@ -35,12 +31,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *  The activity for loading and listing shelters
+ *  @author High5
+ *  @version 1.4
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private FirebaseAuth fireBaseAuth;
 
-    private Button logoutButton;
-    private Button searchButton;
+    //private Button logoutButton;
+    //private Button searchButton;
 
     private ProgressDialog progressDialog;
     private ArrayAdapter adapter;
@@ -48,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static final List<String> legalUserTypes = Arrays.asList(UserTypes.USER.getValue(),
             UserTypes.ADMIN.getValue(),
             UserTypes.EMPLOYEE.getValue());
-    public List<String> shelterKeys;
-    public List defaultValues;
-    public List<Shelter> shelterList;
+    private List<String> shelterKeys;
+    //private List defaultValues;
+    private List<Shelter> shelterList;
     private DatabaseReference mDatabase;
 
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -194,11 +195,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String shelterIDToChange = (String) dataSnapshot.child("reservations").child(fireBaseAuth
+                String shelterIDToChange = (String) dataSnapshot.child("reservations")
+                        .child(fireBaseAuth
                         .getCurrentUser().getUid()).child("ShelterID").getValue();
                 for (Shelter s : shelterList) {
                     if (s.getShelterID().equals(shelterIDToChange)) {
-                        Double availability = Double.valueOf(dataSnapshot.child("shelter-data").child(shelterIDToChange)
+                        Double availability = Double.valueOf(dataSnapshot.child("shelter-data")
+                                .child(shelterIDToChange)
                                 .child("currentAvailability").getValue().toString());
                         s.setCurrentAvailability(availability.intValue());
                     }
@@ -214,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void populateShelters() {
         shelterKeys = new ArrayList<>();
         shelterList = new ArrayList<>();
-        defaultValues = new ArrayList();
+        //defaultValues = new ArrayList();
         shelterKeys.add("address");
         shelterKeys.add("capacity");
         shelterKeys.add("latitude");

@@ -11,6 +11,11 @@ import com.high5.a2340.high5.Registration.Administrator_Registration_Activity;
 import com.high5.a2340.high5.Registration.Employee_Registration_Activity;
 import com.high5.a2340.high5.Registration.User_Registration_Activity;
 
+/**
+ *  Activity for the type of user
+ *  @author High5
+ *  @version 1.4
+ */
 public class UserStatusActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button User;
@@ -22,9 +27,9 @@ public class UserStatusActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_status);
 
-        User = (Button) findViewById(R.id.userButton);
-        Administrator = (Button) findViewById(R.id.administratorButton);
-        Employee = (Button) findViewById(R.id.employeeButton);
+        User = findViewById(R.id.userButton);
+        Administrator = findViewById(R.id.administratorButton);
+        Employee = findViewById(R.id.employeeButton);
 
         User.setOnClickListener(this);
         Administrator.setOnClickListener(this);
@@ -35,13 +40,16 @@ public class UserStatusActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         if (view == User) {
-            startActivity(new Intent(UserStatusActivity.this, User_Registration_Activity.class));
+            startActivity(new Intent(UserStatusActivity.this,
+                    User_Registration_Activity.class));
         }
         if (view == Administrator) {
-            startActivity(new Intent(UserStatusActivity.this, Administrator_Registration_Activity.class));
+            startActivity(new Intent(UserStatusActivity.this,
+                    Administrator_Registration_Activity.class));
         }
         if (view == Employee) {
-            startActivity(new Intent(UserStatusActivity.this, Employee_Registration_Activity.class));
+            startActivity(new Intent(UserStatusActivity.this,
+                    Employee_Registration_Activity.class));
         }
     }
 }

@@ -1,15 +1,12 @@
 package com.high5.a2340.high5.Activities;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import com.high5.a2340.high5.R;
-import com.high5.a2340.high5.Model.Shelter;
 
-import java.util.List;
 import java.util.StringJoiner;
 
-/**
- * Created by hsmul on 3/27/2018.
+/*
+  Created by Henri
+  3/27/2018
  */
 
 import android.os.Bundle;
@@ -22,9 +19,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.high5.a2340.high5.Model.Shelter;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Activity for showing a map view of shielters
+ *  @author High5
+ *  @version 1.4
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final float INITIAL_ZOOM = 12.0f;
@@ -42,8 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
+    public void onMapReady(GoogleMap mMap) {
 
         // Add a markers
         for (Shelter e : shelterList) {
@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .snippet(formatPhoneNum(e.getPhoneNumber())));
         }
         //move camera to focus on first shelter in the list
-        if (shelterList.size() != 0) {
+        if (!shelterList.isEmpty()) {
             Shelter example = shelterList.get(0);
             LatLng pos = new LatLng(example.getLatitude(), example.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
@@ -63,11 +63,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public String formatPhoneNum(String input) {
+    private String formatPhoneNum(String input) {
         StringJoiner finalPhone = new StringJoiner("-");
         String cleaned = cleanupString(input);
         int length = cleaned.length();
-        int max = length - 2 * Math.floorMod(3 - length, 3);
+        int max = (length - (2 * Math.floorMod(3 - length, 3)));
         for (int i = 0; i < max; i += 3) {
             finalPhone.add(cleaned.substring(i, i + 3));
         }

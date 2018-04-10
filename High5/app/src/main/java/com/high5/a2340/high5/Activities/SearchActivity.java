@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.high5.a2340.high5.Model.Shelter;
@@ -29,7 +27,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by hsmulders on 3/6/18.
+ * Created by Tom
+ * 3/6/18
  */
 
 
@@ -53,30 +52,33 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_search);
 
 
-        maleBox = (CheckBox) findViewById(R.id.maleBox);
-        femaleBox = (CheckBox) findViewById(R.id.femaleBox);
-        listView = (ListView) findViewById(R.id.listView);
-        ageSpinner = (Spinner) findViewById(R.id.spinner);
-        searchText = (EditText) findViewById(R.id.searchText);
-        emptyText = (TextView) findViewById(R.id.emptyTextView);
-        Button mapButton = (Button) findViewById(R.id.mapButton);
+        maleBox = findViewById(R.id.maleBox);
+        femaleBox = findViewById(R.id.femaleBox);
+        listView = findViewById(R.id.listView);
+        ageSpinner = findViewById(R.id.spinner);
+        searchText = findViewById(R.id.searchText);
+        emptyText = findViewById(R.id.emptyTextView);
+        Button mapButton = findViewById(R.id.mapButton);
 
 
         listView.setOnItemClickListener(this);
 
         shelterList = (List<Shelter>) getIntent().getSerializableExtra("shelterList");
-        filteredList = new ArrayList<Shelter>();
+        filteredList = new ArrayList<>();
 
         listAdapter = new ArrayAdapter(this, R.layout.simple_list_item);
 
-        ArrayAdapter<AgeRange> ageAdapter = new ArrayAdapter<AgeRange>(this, android.R.layout.simple_spinner_item, AgeRange.values());
+        ArrayAdapter<AgeRange> ageAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, AgeRange.values());
         ageSpinner.setAdapter(ageAdapter);
         ageSpinner.setSelection(ageAdapter.getPosition(AgeRange.ANYONE));
         listView.setAdapter(listAdapter);
 
         mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SearchActivity.this, MapsActivity.class);
+                Intent myIntent = new Intent(SearchActivity.this,
+                        MapsActivity.class);
                 myIntent.putExtra("shelterList", (Serializable) filteredList);
                 startActivity(myIntent);
             }
@@ -133,7 +135,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
 
-    //TODO: IMPLEMENT FUZZY SEARCH
     private void filter(){
         listAdapter.clear();
         filteredList.clear();
@@ -145,12 +146,13 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             if(shelterList.get(i).getAgeRange().equals(age) || age.equals(AgeRange.ANYONE)) {
                 if (male && female) {
                     filteredList.add(shelterList.get(i));
-                } else if (shelterList.get(i).isMale() == male && shelterList.get(i).isFemale() == female) {
+                } else if ((shelterList.get(i).isMale() == male) && (shelterList
+                        .get(i).isFemale() == female)) {
                     filteredList.add(shelterList.get(i));
                 }
             }
         }
-        if (!text.equals("")){
+        if (!text.isEmpty()){
             Iterator<Shelter> iter = filteredList.iterator();
 
             while (iter.hasNext()) {

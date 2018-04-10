@@ -3,28 +3,25 @@ package com.high5.a2340.high5.Model;
 import java.io.Serializable;
 
 /**
- * Created by david on 2/26/2018.
+ * Created by David
+ * 2/26/2018
  */
 
 public class Shelter implements Serializable {
-    private String address;
-    private String capacity;
-    private double latitude;
-    private double longitude;
-    private String phoneNumber;
-    private String restrictions;
-    private String shelterName;
-    private boolean isFemale;
-    private boolean isMale;
-    private String specialNotes;
+    private final String address;
+    private final String capacity;
+    private final double latitude;
+    private final double longitude;
+    private final String phoneNumber;
+    private final String restrictions;
+    private final String shelterName;
+    private final boolean isFemale;
+    private final boolean isMale;
+    private final String specialNotes;
     private Integer currentAvailability;
-    private AgeRange shelterAgeRange;
-    private String shelterID;
+    private final AgeRange shelterAgeRange;
+    private final String shelterID;
 
-
-    public Shelter() {
-
-    }
 
     public Shelter(String address, String capacity, double latitude, double longitude,
                    String phoneNumber, String restrictions, String shelterName, boolean isFemale,
@@ -54,10 +51,6 @@ public class Shelter implements Serializable {
         return capacity;
     }
 
-    public void setCapacity(String capacity) {
-        this.capacity = capacity;
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -70,16 +63,8 @@ public class Shelter implements Serializable {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getRestrictions() {
         return restrictions;
-    }
-
-    public void setRestrictions(String restrictions) {
-        this.restrictions = restrictions;
     }
 
     public String getShelterName() {
@@ -88,23 +73,13 @@ public class Shelter implements Serializable {
 
     public boolean isFemale() { return isFemale; }
 
-    public void setFemale(boolean female) { isFemale = female; }
-
     public boolean isMale() { return isMale; }
-
-    public void setMale(boolean male) { isMale = male; }
 
     public String getSpecialNotes() {
         return specialNotes;
     }
 
-    public void setSpecialNotes(String specialNotes) {
-        this.specialNotes = specialNotes;
-    }
-
     public AgeRange getAgeRange() { return shelterAgeRange; }
-
-    public void setAgeRange(AgeRange age) { shelterAgeRange = age; }
 
     public String toString() {return shelterName; }
 
