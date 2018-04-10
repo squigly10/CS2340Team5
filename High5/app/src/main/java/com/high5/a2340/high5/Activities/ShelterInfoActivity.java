@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.high5.a2340.high5.Model.AgeRange;
 import com.high5.a2340.high5.Model.Shelter;
 import com.high5.a2340.high5.R;
 
@@ -52,7 +53,8 @@ public class ShelterInfoActivity extends AppCompatActivity implements View.OnCli
         boolean isFemale = currentShelter.isFemale();
         boolean isMale = currentShelter.isMale();
         String specialNotes = currentShelter.getSpecialNotes();
-        String shelterAgeRange = currentShelter.getAgeRange().toString();
+        AgeRange shelterRange = currentShelter.getAgeRange();
+        String shelterAgeRange = shelterRange.toString();
         Integer currentAvailability = currentShelter.getCurrentAvailability();
         shelterID = currentShelter.getShelterID();
 
