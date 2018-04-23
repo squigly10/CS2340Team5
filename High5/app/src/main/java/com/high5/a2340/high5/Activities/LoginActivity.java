@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText passwordText;
     private TextView signInButton;
     private TextView addShelterButton;
+    private TextView forgotPasswordButton;
 
     private ProgressDialog progressDialog;
 
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordText = findViewById((R.id.passwordTextBox));
         signInButton = findViewById((R.id.registrationButton));
         addShelterButton = findViewById(R.id.addShelterButton);
+        forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
 
         progressDialog = new ProgressDialog(this);
 
@@ -62,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton.setOnClickListener(this);
         signInButton.setOnClickListener(this);
         addShelterButton.setOnClickListener(this);
-
+        forgotPasswordButton.setOnClickListener(this);
     }
 
 
@@ -113,6 +116,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         if (view ==  addShelterButton) {
             startActivity(new Intent(LoginActivity.this, Shelter_Registration_Activity.class));
+        }
+        if (view == forgotPasswordButton) {
+            String email = emailText.getText().toString().trim();
+            if (email.isEmpty()) {
+                emailText.setError("Required");
+                return;
+            } else {
+                fireBaseAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Recovery" +
+                                            " Email Sent.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.d(TAG, "Email not found.");
+                                    Toast.makeText(LoginActivity.this, "Email" +
+                                            " Not Found.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
         }
     }
 }
