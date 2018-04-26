@@ -44,7 +44,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     private ArrayAdapter listAdapter;
     private ListView listView;
     private TextView emptyText;
-
+    //this variable determines the levenschtein distance for fuzzy search
+    private static final int K = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,8 +158,9 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
             while (iter.hasNext()) {
                 Shelter temp = iter.next();
-
-                if (!temp.getShelterName().toLowerCase().contains(text.toLowerCase())){
+                char[] name = temp.getShelterName().toLowerCase().toCharArray();
+                char[] pattern = text.toLowerCase().toCharArray();
+                if (!bitap(name, pattern)){
                     iter.remove();
                 }
             }
@@ -168,6 +170,32 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         }
         listView.setAdapter(listAdapter);
         listView.setEmptyView(emptyText);
+    }
+
+    private boolean bitap(char[] text, char[] pattern) {
+        int m = pattern.length;
+        long mask[] = new long[Character.MAX_VALUE + 1];
+        long r = ~1;
+        if (m==0) {
+            return true;
+        }
+        if (m>63) {
+            return false;
+        }
+        for (int i =0; i<=Character.MAX_VALUE; ++i) {
+            mask[i] = ~0;
+        }
+        for (int i = 0; i < m; ++i){
+            mask[pattern[i]] &= ~(1L << i);
+        }
+        for (int i = 0; i<text.length; ++i){
+            r |= mask[text[i]];
+            r <<= 1;
+            if ((r&(1L << m)) == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
